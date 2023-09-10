@@ -3,6 +3,61 @@
  */
 package metamark
 
+sealed interface Node
+
+sealed class TextNode {
+    abstract val text: String
+}
+
+data class PlainTextNode(
+    override val text: String
+) : TextNode()
+
+sealed class SpecialCharacter : TextNode() {
+    override val text: String
+        get() = character.toString()
+
+    abstract val character: Char
+}
+
+data object AsteriskCharacter : SpecialCharacter() {
+    override val character: Char = '*'
+}
+
+data object UnderscoreCharacter : SpecialCharacter() {
+    override val character: Char = '_'
+}
+
+data object BracketLeftCharacter : SpecialCharacter() {
+    override val character: Char = '['
+}
+
+data object BracketRightCharacter : SpecialCharacter() {
+    override val character: Char = ']'
+}
+
+data class PlainText(
+    val content: String,
+)
+
+class TokenStream<TToken> {
+    fun peekNext(): TToken? {
+        TODO()
+
+    }
+
+    fun extractNext(): TToken? {
+        TODO()
+    }
+
+}
+
+fun parseInlineContent1(
+    charStream: TokenStream<Char>,
+) {
+    
+}
+
 fun main() {
     println("Hello, MetaMark!")
 }
