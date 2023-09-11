@@ -7,15 +7,15 @@ root : definition+ ;
 definition : kind=(SymbolKeyword | RuleKeyword) Colon body=expression ;
 
 expression
-    : parenExpression
-    | matchZeroOrMoreExpression
-    | referenceExpression
-    | stringLiteral
+    : parenExpression # expression_parenExpression
+    | repeatedExpression=expression Asterisk # expression_matchZeroOrMoreExpression
+    | repeatedExpression=expression Plus # expression_matchOneOrMoreExpression // TODO
+    | optionalExpression=expression QuestionMark # expression_matchZeroOrOneExpression // TODO
+    | referenceExpression # expression_referenceExpression
+    | stringLiteral # expression_stringLiteral
     ;
 
-parenExpression : ParenLeft expression ParenRight ;
-
-matchZeroOrMoreExpression : expression Asterisk ;
+parenExpression : ParenLeft wrappedExpression=expression ParenRight ;
 
 referenceExpression : Identifier ;
 

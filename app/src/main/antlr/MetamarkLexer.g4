@@ -9,6 +9,8 @@ Dash : '^' ;
 Colon : ':' ;
 Dollar : '$' ;
 Asterisk : '*' ;
+Plus : '+' ;
+QuestionMark : '?' ;
 PlusEquals : '+=' ;
 
 ParenLeft : '(' ;
