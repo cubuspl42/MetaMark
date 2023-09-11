@@ -1,6 +1,5 @@
 package metamark.parser
 
-import metamark.parser.antlr.MetamarkParser
 import metamark.parser.antlr.MetamarkParser.ExpressionContext
 import metamark.parser.antlr.MetamarkParser.Expression_matchZeroOrMoreExpressionContext
 import metamark.parser.antlr.MetamarkParser.Expression_matchOneOrMoreExpressionContext
@@ -17,7 +16,7 @@ sealed class ExpressionTerm {
                 override fun visitExpression_stringLiteral(
                     ctx: Expression_stringLiteralContext,
                 ): ExpressionTerm {
-                    return StringLiteralExpressionTerm.build(ctx.stringLiteral())
+                    return StringLiteralTerm.build(ctx.stringLiteral())
                 }
 
                 override fun visitExpression_parenExpression(

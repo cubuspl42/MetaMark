@@ -4,7 +4,7 @@ options { tokenVocab = MetamarkLexer; }
 
 root : definition+ ;
 
-definition : kind=(SymbolKeyword | RuleKeyword) Colon body=expression ;
+definition : kind=(SymbolKeyword | RuleKeyword) name=Identifier Colon body=expression ;
 
 expression
     : parenExpression # expression_parenExpression
@@ -17,6 +17,6 @@ expression
 
 parenExpression : ParenLeft wrappedExpression=expression ParenRight ;
 
-referenceExpression : Identifier ;
+referenceExpression : referredIdentifier=Identifier ;
 
 stringLiteral : StringLiteral ;
