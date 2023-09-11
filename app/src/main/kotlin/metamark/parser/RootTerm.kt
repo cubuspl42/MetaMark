@@ -22,10 +22,10 @@ data class RootTerm(
             return RootTerm.build(parser.root())
         }
 
-        fun build(ctx: RootContext): RootTerm = RootTerm(
+        private fun build(ctx: RootContext): RootTerm = RootTerm(
             definitions = ctx.definition().map {
-                DefinitionTerm.build(ctx)
-            }
+                DefinitionTerm.build(it)
+            },
         )
     }
 }
