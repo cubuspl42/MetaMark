@@ -1,11 +1,11 @@
 package metamark
 
-import metamark.parser.DefinitionKind
-import metamark.parser.DefinitionTerm
 import metamark.parser.MatchOneOrMoreExpressionTerm
 import metamark.parser.ReferenceExpressionTerm
 import metamark.parser.RootTerm
+import metamark.parser.RuleDefinitionTerm
 import metamark.parser.StringLiteralTerm
+import metamark.parser.SymbolDefinitionTerm
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -23,15 +23,13 @@ class TermTests {
         assertEquals(
             expected = RootTerm(
                 definitions = listOf(
-                    DefinitionTerm(
-                        kind = DefinitionKind.Symbol,
+                    SymbolDefinitionTerm(
                         name = "Ex",
-                        body = StringLiteralTerm(
+                        pattern = StringLiteralTerm(
                             value = "x",
                         ),
                     ),
-                    DefinitionTerm(
-                        kind = DefinitionKind.Rule,
+                    RuleDefinitionTerm(
                         name = "root",
                         body = MatchOneOrMoreExpressionTerm(
                             repeatedExpression = ReferenceExpressionTerm(

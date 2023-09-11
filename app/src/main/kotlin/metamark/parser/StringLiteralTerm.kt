@@ -4,7 +4,7 @@ import metamark.parser.antlr.MetamarkParser
 
 data class StringLiteralTerm(
     val value: String,
-) : ExpressionTerm() {
+) {
     companion object {
         fun build(ctx: MetamarkParser.StringLiteralContext): StringLiteralTerm {
             val rawText = ctx.StringLiteral().text
