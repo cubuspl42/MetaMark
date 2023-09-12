@@ -2,15 +2,15 @@ parser grammar MetamarkParser;
 
 options { tokenVocab = MetamarkLexer; }
 
-root : definition+ ;
+grammar_ : definition+ ;
 
 definition : kind=(SymbolKeyword | RuleKeyword) name=Identifier Colon body=expression ;
 
 expression
     : parenExpression # expression_parenExpression
     | repeatedExpression=expression Asterisk # expression_matchZeroOrMoreExpression
-    | repeatedExpression=expression Plus # expression_matchOneOrMoreExpression // TODO
-    | optionalExpression=expression QuestionMark # expression_matchZeroOrOneExpression // TODO
+    | repeatedExpression=expression Plus # expression_matchOneOrMoreExpression
+    | optionalExpression=expression QuestionMark # expression_matchZeroOrOneExpression
     | referenceExpression # expression_referenceExpression
     | stringLiteral # expression_stringLiteral
     ;

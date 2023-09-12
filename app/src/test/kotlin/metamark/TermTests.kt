@@ -2,7 +2,7 @@ package metamark
 
 import metamark.parser.MatchOneOrMoreExpressionTerm
 import metamark.parser.ReferenceExpressionTerm
-import metamark.parser.RootTerm
+import metamark.parser.GrammarTerm
 import metamark.parser.RuleDefinitionTerm
 import metamark.parser.StringLiteralTerm
 import metamark.parser.SymbolDefinitionTerm
@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 class TermTests {
     @Test
     fun testRoot() {
-        val term = RootTerm.parse(
+        val term = GrammarTerm.parse(
             source = """
                 %symbol Ex : "x"
                 
@@ -21,7 +21,7 @@ class TermTests {
         )
 
         assertEquals(
-            expected = RootTerm(
+            expected = GrammarTerm(
                 definitions = listOf(
                     SymbolDefinitionTerm(
                         name = "Ex",
