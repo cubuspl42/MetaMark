@@ -14,3 +14,22 @@ export function parseAsContext<C extends ParserRuleContext>(
 
     return rule(parser);
 }
+
+export function arrayEquals<A>(
+    a: ReadonlyArray<A>,
+    b: ReadonlyArray<A>,
+    equals: (a: A, b: A) => boolean,
+): boolean {
+    if (a.length !== b.length) return false;
+
+    for (const ai of a) {
+        const i = a.indexOf(ai);
+        const bi = b[i];
+
+        if (!(equals(ai, bi))) {
+            return false;
+        }
+    }
+
+    return true;
+}
