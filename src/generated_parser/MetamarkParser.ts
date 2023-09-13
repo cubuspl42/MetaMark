@@ -312,7 +312,7 @@ export class MetamarkParser extends Parser {
 			this.state = 39;
 			this.match(MetamarkParser.ParenLeft);
 			this.state = 40;
-			_localctx._wrappedExpression = this.expression(0);
+			_localctx._innerExpression = this.expression(0);
 			this.state = 41;
 			this.match(MetamarkParser.ParenRight);
 			}
@@ -611,7 +611,7 @@ export class Expression_stringLiteralContext extends ExpressionContext {
 
 
 export class ParenExpressionContext extends ParserRuleContext {
-	public _wrappedExpression!: ExpressionContext;
+	public _innerExpression!: ExpressionContext;
 	public ParenLeft(): TerminalNode { return this.getToken(MetamarkParser.ParenLeft, 0); }
 	public ParenRight(): TerminalNode { return this.getToken(MetamarkParser.ParenRight, 0); }
 	public expression(): ExpressionContext {
