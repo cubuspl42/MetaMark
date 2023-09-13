@@ -15,7 +15,7 @@ expression
     | stringLiteral # expression_stringLiteral
     ;
 
-parenExpression : ParenLeft wrappedExpression=expression ParenRight ;
+parenExpression : ParenLeft innerExpression=expression ParenRight ;
 
 referenceExpression : referredIdentifier=Identifier ;
 
