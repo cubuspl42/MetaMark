@@ -1,19 +1,36 @@
-import {DefinitionContext, MetamarkParser, StringLiteralContext} from "../generated_parser/MetamarkParser";
+import {
+    DefinitionContext,
+    Expression_stringLiteralContext,
+    MetamarkParser,
+    StringLiteralContext
+} from "../generated_parser/MetamarkParser";
 import {MetamarkLexer} from "../generated_parser/MetamarkLexer";
 import {ExpressionTerm} from "./ExpressionTerm";
 import {StringLiteralTerm} from "./StringLiteralTerm";
+import {arrayEquals} from "./utils";
+import {ExpressionTermUtils} from "./ExpressionTermUtils";
 
 export abstract class DefinitionTerm {
+    static equals(a: DefinitionTerm, b: DefinitionTerm): boolean;
+    static equals(a: unknown, b: unknown): boolean | undefined;
+
+    static equals(a: unknown, b: unknown): boolean | undefined {
+        return SymbolDefinitionTerm.equals(a, b) ?? RuleDefinitionTerm.equals(a, b);
+    }
+
     static build(ctx: DefinitionContext): DefinitionTerm {
-        if (ctx._kind.type === MetamarkLexer.SymbolKeyword) {
+        const kindType = ctx._kind.type;
+        const body = ctx._body;
+
+        if (kindType === MetamarkLexer.SymbolKeyword && body instanceof Expression_stringLiteralContext) {
             return new SymbolDefinitionTerm(
                 ctx._name.text,
-                StringLiteralTerm.build(ctx._body as StringLiteralContext),
+                StringLiteralTerm.build(body.stringLiteral()),
             );
-        } else if (ctx._kind.type === MetamarkLexer.RuleKeyword) {
+        } else if (kindType === MetamarkLexer.RuleKeyword) {
             return new RuleDefinitionTerm(
                 ctx._name.text,
-                ExpressionTerm.build(ctx._body),
+                ExpressionTermUtils.build(body),
             );
         } else {
             throw new Error(`Unsupported definition kind token: ${ctx._kind}`);
@@ -24,6 +41,16 @@ export abstract class DefinitionTerm {
 }
 
 export class SymbolDefinitionTerm extends DefinitionTerm {
+    static equals(a: SymbolDefinitionTerm, b: SymbolDefinitionTerm): boolean;
+    static equals(a: unknown, b: unknown): boolean | undefined;
+
+    static equals(a: unknown, b: unknown): boolean | undefined {
+        if (!(a instanceof SymbolDefinitionTerm)) return undefined;
+        if (!(b instanceof SymbolDefinitionTerm)) return undefined;
+        if (a.name !== b.name) return false;
+        return StringLiteralTerm.equals(a.pattern, b.pattern);
+    }
+
     override readonly name: string;
     readonly pattern: StringLiteralTerm;
 
@@ -35,6 +62,16 @@ export class SymbolDefinitionTerm extends DefinitionTerm {
 }
 
 export class RuleDefinitionTerm extends DefinitionTerm {
+    static equals(a: RuleDefinitionTerm, b: RuleDefinitionTerm): boolean;
+    static equals(a: unknown, b: unknown): boolean | undefined;
+
+    static equals(a: unknown, b: unknown): boolean | undefined {
+        if (!(a instanceof RuleDefinitionTerm)) return undefined;
+        if (!(b instanceof RuleDefinitionTerm)) return undefined;
+        if (a.name !== b.name) return false;
+        return ExpressionTermUtils.equals(a.body, b.body);
+    }
+
     override readonly name: string;
     readonly body: ExpressionTerm;
 
