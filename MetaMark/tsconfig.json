@@ -4,5 +4,13 @@
     "module": "commonjs",
     "outDir": "./dist",
     "newLine": "lf",
-  },
+    "lib": [
+      "ES2021"
+    ],
+    "alwaysStrict": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
 }
