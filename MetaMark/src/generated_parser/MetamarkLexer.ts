@@ -74,19 +74,19 @@ export class MetamarkLexer extends Lexer {
 	}
 
 	// @Override
-	public get grammarFileName(): string { return "MetamarkLexer.g4"; }
+	public override get grammarFileName(): string { return "MetamarkLexer.g4"; }
 
 	// @Override
-	public get ruleNames(): string[] { return MetamarkLexer.ruleNames; }
+	public override get ruleNames(): string[] { return MetamarkLexer.ruleNames; }
 
 	// @Override
-	public get serializedATN(): string { return MetamarkLexer._serializedATN; }
+	public override get serializedATN(): string { return MetamarkLexer._serializedATN; }
 
 	// @Override
-	public get channelNames(): string[] { return MetamarkLexer.channelNames; }
+	public override get channelNames(): string[] { return MetamarkLexer.channelNames; }
 
 	// @Override
-	public get modeNames(): string[] { return MetamarkLexer.modeNames; }
+	public override get modeNames(): string[] { return MetamarkLexer.modeNames; }
 
 	public static readonly _serializedATN: string =
 		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x02\x12_\b\x01\x04" +

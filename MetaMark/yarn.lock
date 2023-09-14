@@ -304,6 +304,11 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@cubuspl42/antlr4ts-cli@^0.6.0-alpha.2":
+  version "0.6.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@cubuspl42/antlr4ts-cli/-/antlr4ts-cli-0.6.0-alpha.2.tgz#33c38915964d3ea7cae133dd0cadf94e58d8dd14"
+  integrity sha512-InRmMemyQL96wGRVfz9VirLEA3tsO/y2PieaYzMRJUr1MO+7oopfoQWGoryPWPcmJmiIAXc5IgLM5+4sWmhzVg==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -717,11 +722,6 @@ ansi-styles@^5.0.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-5.2.0.tgz#07449690ad45777d1924ac2abb2fc8895dba836b"
   integrity sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
-
-antlr4ts-cli@^0.5.0-alpha.4:
-  version "0.5.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/antlr4ts-cli/-/antlr4ts-cli-0.5.0-alpha.4.tgz#f3bfc37f10131e78d7b981c397a2aaa0450b67f6"
-  integrity sha512-lVPVBTA2CVHRYILSKilL6Jd4hAumhSZZWA7UbQNQrmaSSj7dPmmYaN4bOmZG79cOy0lS00i4LY68JZZjZMWVrw==
 
 antlr4ts@^0.5.0-alpha.4:
   version "0.5.0-alpha.4"
