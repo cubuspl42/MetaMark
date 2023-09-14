@@ -304,10 +304,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@cubuspl42/antlr4ts-cli@^0.6.0-alpha.2":
-  version "0.6.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@cubuspl42/antlr4ts-cli/-/antlr4ts-cli-0.6.0-alpha.2.tgz#33c38915964d3ea7cae133dd0cadf94e58d8dd14"
-  integrity sha512-InRmMemyQL96wGRVfz9VirLEA3tsO/y2PieaYzMRJUr1MO+7oopfoQWGoryPWPcmJmiIAXc5IgLM5+4sWmhzVg==
+"@cubuspl42/antlr4ts-cli@^0.6.0-alpha.4":
+  version "0.6.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@cubuspl42/antlr4ts-cli/-/antlr4ts-cli-0.6.0-alpha.4.tgz#40a7ea4225a9e9fdef8a4bae80f95a31d60f8e99"
+  integrity sha512-74AeUq8uGn6tjgU1UqXZq/yaIU3/VNqJnPHckl0AAyNRtMXfaFg3uCM6UGa+jZYdCj0J4U6Cxh8o11r6M49vtw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
