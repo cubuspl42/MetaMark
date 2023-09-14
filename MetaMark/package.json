@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "yarn run antlr && tsc",
-    "typecheck": "tsc --project ./src/main --noEmit",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "antlr": "antlr4ts -visitor -no-listener src/generated_parser/MetamarkLexer.g4 ./src/generated_parser/MetamarkParser.g4",
     "prepublish": "yarn run build"
