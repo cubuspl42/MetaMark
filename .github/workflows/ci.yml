@@ -18,8 +18,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-      working-directory: ./MetaMark
+    defaults:
+      run:
+        working-directory: ./MetaMark
 
     steps:
       - name: Checkout the repository
@@ -42,12 +43,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: ${{env.working-directory}}
 
       - name: Build the project
         run: npm run build
-        working-directory: ${{env.working-directory}}
 
       - name: Run tests
         run: npm test
-        working-directory: ${{env.working-directory}}
