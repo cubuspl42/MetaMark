@@ -3,8 +3,8 @@ import {
     Expression_stringLiteralContext,
     MetamarkParser,
     StringLiteralContext
-} from "../generated_parser/MetamarkParser";
-import {MetamarkLexer} from "../generated_parser/MetamarkLexer";
+} from "../generated_src/MetamarkParser";
+import {MetamarkLexer} from "../generated_src/MetamarkLexer";
 import {ExpressionTerm} from "./ExpressionTerm";
 import {StringLiteralTerm} from "./StringLiteralTerm";
 import {arrayEquals} from "./utils";

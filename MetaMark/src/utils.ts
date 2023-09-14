@@ -1,7 +1,7 @@
 import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
-import {MetamarkParser} from "../generated_parser/MetamarkParser";
+import {MetamarkParser} from "../generated_src/MetamarkParser";
 import {CharStreams, CommonTokenStream} from "antlr4ts";
-import {MetamarkLexer} from "../generated_parser/MetamarkLexer";
+import {MetamarkLexer} from "../generated_src/MetamarkLexer";
 
 export function parseAsContext<C extends ParserRuleContext>(
     rule: (p: MetamarkParser) => C,

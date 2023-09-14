@@ -1,9 +1,11 @@
 {
+  "name": "metamark",
+  "version": "0.1.0-alpha.2",
   "scripts": {
     "build": "yarn run antlr && tsc",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "antlr": "antlr4ts -visitor -no-listener src/generated_parser/MetamarkLexer.g4 ./src/generated_parser/MetamarkParser.g4",
+    "antlr": "antlr4ts -visitor -no-listener ./generated_src/MetamarkLexer.g4 ./generated_src/MetamarkParser.g4",
     "prepublish": "yarn run build"
   },
   "devDependencies": {
@@ -21,6 +23,6 @@
     "minimist": "^1.2.8"
   },
   "bin": {
-    "metamark": "./dist/main/main.js"
+    "metamark": "./dist/src/main.js"
   }
 }
