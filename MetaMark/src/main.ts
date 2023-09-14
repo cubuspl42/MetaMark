@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import minimist from 'minimist';
 import * as fs from "fs";
 import {GrammarTerm} from "./GrammarTerm";
