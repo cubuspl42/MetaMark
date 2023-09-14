@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "build": "npm run antlr && tsc",
+    "build": "yarn run antlr && tsc",
     "typecheck": "tsc --project ./src/main --noEmit",
     "test": "jest",
     "antlr": "antlr4ts -visitor -no-listener src/generated_parser/MetamarkLexer.g4 ./src/generated_parser/MetamarkParser.g4",
-    "prepublish": "npm run build"
+    "prepublish": "yarn run build"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
