@@ -24,12 +24,12 @@ export abstract class DefinitionTerm {
 
         if (kindType === MetamarkLexer.SymbolKeyword && body instanceof Expression_stringLiteralContext) {
             return new SymbolDefinitionTerm(
-                ctx._name.text,
+                ctx._name.text ?? "",
                 StringLiteralTerm.build(body.stringLiteral()),
             );
         } else if (kindType === MetamarkLexer.RuleKeyword) {
             return new RuleDefinitionTerm(
-                ctx._name.text,
+                ctx._name.text ?? "",
                 ExpressionTermUtils.build(body),
             );
         } else {
@@ -41,10 +41,10 @@ export abstract class DefinitionTerm {
 }
 
 export class SymbolDefinitionTerm extends DefinitionTerm {
-    static equals(a: SymbolDefinitionTerm, b: SymbolDefinitionTerm): boolean;
-    static equals(a: unknown, b: unknown): boolean | undefined;
+    static override equals(a: SymbolDefinitionTerm, b: SymbolDefinitionTerm): boolean;
+    static override equals(a: unknown, b: unknown): boolean | undefined;
 
-    static equals(a: unknown, b: unknown): boolean | undefined {
+    static override equals(a: unknown, b: unknown): boolean | undefined {
         if (!(a instanceof SymbolDefinitionTerm)) return undefined;
         if (!(b instanceof SymbolDefinitionTerm)) return undefined;
         if (a.name !== b.name) return false;
@@ -62,10 +62,10 @@ export class SymbolDefinitionTerm extends DefinitionTerm {
 }
 
 export class RuleDefinitionTerm extends DefinitionTerm {
-    static equals(a: RuleDefinitionTerm, b: RuleDefinitionTerm): boolean;
-    static equals(a: unknown, b: unknown): boolean | undefined;
+    static override equals(a: RuleDefinitionTerm, b: RuleDefinitionTerm): boolean;
+    static override equals(a: unknown, b: unknown): boolean | undefined;
 
-    static equals(a: unknown, b: unknown): boolean | undefined {
+    static override equals(a: unknown, b: unknown): boolean | undefined {
         if (!(a instanceof RuleDefinitionTerm)) return undefined;
         if (!(b instanceof RuleDefinitionTerm)) return undefined;
         if (a.name !== b.name) return false;
