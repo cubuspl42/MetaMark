@@ -4,7 +4,7 @@ import * as fs from "fs";
 import {GrammarTerm} from "./GrammarTerm";
 import * as path from "path";
 
-const outputFileName = 'MarkParser.js';
+const outputFileName = 'MarkParser.ts';
 
 function main() {
     const args = minimist(process.argv.slice(2));
@@ -26,12 +26,12 @@ function main() {
     const grammar = GrammarTerm.parse(grammarSource);
 
     const generatedSource = `
-const MarkParser {
+export class MarkParser {
     parse(source: string): string {
         return "foo";
     }
 }
-`;
+`.trim();
 
     fs.writeFileSync(
         path.join(outputPath, outputFileName),
