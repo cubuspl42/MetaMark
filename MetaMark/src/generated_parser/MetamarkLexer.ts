@@ -62,7 +62,7 @@ export class MetamarkLexer extends Lexer {
 
 	// @Override
 	// @NotNull
-	public get vocabulary(): Vocabulary {
+	public override get vocabulary(): Vocabulary {
 		return MetamarkLexer.VOCABULARY;
 	}
 	// tslint:enable:no-trailing-whitespace

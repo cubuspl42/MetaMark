@@ -68,7 +68,7 @@ export class MetamarkParser extends Parser {
 
 	// @Override
 	// @NotNull
-	public get vocabulary(): Vocabulary {
+	public override get vocabulary(): Vocabulary {
 		return MetamarkParser.VOCABULARY;
 	}
 	// tslint:enable:no-trailing-whitespace
@@ -380,7 +380,7 @@ export class MetamarkParser extends Parser {
 		return _localctx;
 	}
 
-	public sempred(_localctx: RuleContext, ruleIndex: number, predIndex: number): boolean {
+	public override sempred(_localctx: RuleContext, ruleIndex: number, predIndex: number): boolean {
 		switch (ruleIndex) {
 		case 2:
 			return this.expression_sempred(_localctx as ExpressionContext, predIndex);
@@ -449,7 +449,7 @@ export class Grammar_Context extends ParserRuleContext {
 	// @Override
 	public override get ruleIndex(): number { return MetamarkParser.RULE_grammar_; }
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitGrammar_) {
 			return visitor.visitGrammar_(this);
 		} else {
@@ -476,7 +476,7 @@ export class DefinitionContext extends ParserRuleContext {
 	// @Override
 	public override get ruleIndex(): number { return MetamarkParser.RULE_definition; }
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitDefinition) {
 			return visitor.visitDefinition(this);
 		} else {
@@ -492,7 +492,7 @@ export class ExpressionContext extends ParserRuleContext {
 	}
 	// @Override
 	public override get ruleIndex(): number { return MetamarkParser.RULE_expression; }
-	public copyFrom(ctx: ExpressionContext): void {
+	public override copyFrom(ctx: ExpressionContext): void {
 		super.copyFrom(ctx);
 	}
 }
@@ -505,7 +505,7 @@ export class Expression_parenExpressionContext extends ExpressionContext {
 		this.copyFrom(ctx);
 	}
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitExpression_parenExpression) {
 			return visitor.visitExpression_parenExpression(this);
 		} else {
@@ -524,7 +524,7 @@ export class Expression_matchZeroOrMoreExpressionContext extends ExpressionConte
 		this.copyFrom(ctx);
 	}
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitExpression_matchZeroOrMoreExpression) {
 			return visitor.visitExpression_matchZeroOrMoreExpression(this);
 		} else {
@@ -543,7 +543,7 @@ export class Expression_matchOneOrMoreExpressionContext extends ExpressionContex
 		this.copyFrom(ctx);
 	}
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitExpression_matchOneOrMoreExpression) {
 			return visitor.visitExpression_matchOneOrMoreExpression(this);
 		} else {
@@ -562,7 +562,7 @@ export class Expression_matchZeroOrOneExpressionContext extends ExpressionContex
 		this.copyFrom(ctx);
 	}
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitExpression_matchZeroOrOneExpression) {
 			return visitor.visitExpression_matchZeroOrOneExpression(this);
 		} else {
@@ -579,7 +579,7 @@ export class Expression_referenceExpressionContext extends ExpressionContext {
 		this.copyFrom(ctx);
 	}
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitExpression_referenceExpression) {
 			return visitor.visitExpression_referenceExpression(this);
 		} else {
@@ -596,7 +596,7 @@ export class Expression_stringLiteralContext extends ExpressionContext {
 		this.copyFrom(ctx);
 	}
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitExpression_stringLiteral) {
 			return visitor.visitExpression_stringLiteral(this);
 		} else {
@@ -619,7 +619,7 @@ export class ParenExpressionContext extends ParserRuleContext {
 	// @Override
 	public override get ruleIndex(): number { return MetamarkParser.RULE_parenExpression; }
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitParenExpression) {
 			return visitor.visitParenExpression(this);
 		} else {
@@ -638,7 +638,7 @@ export class ReferenceExpressionContext extends ParserRuleContext {
 	// @Override
 	public override get ruleIndex(): number { return MetamarkParser.RULE_referenceExpression; }
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitReferenceExpression) {
 			return visitor.visitReferenceExpression(this);
 		} else {
@@ -656,7 +656,7 @@ export class StringLiteralContext extends ParserRuleContext {
 	// @Override
 	public override get ruleIndex(): number { return MetamarkParser.RULE_stringLiteral; }
 	// @Override
-	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitStringLiteral) {
 			return visitor.visitStringLiteral(this);
 		} else {
