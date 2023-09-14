@@ -1,5 +1,5 @@
 import {arrayEquals, parseAsContext} from "./utils";
-import {Grammar_Context} from "../generated_parser/MetamarkParser";
+import {Grammar_Context} from "../generated_src/MetamarkParser";
 import {DefinitionTerm} from "./DefinitionTerm";
 
 export class GrammarTerm {

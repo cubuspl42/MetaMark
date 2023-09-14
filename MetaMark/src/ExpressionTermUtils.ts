@@ -11,7 +11,7 @@ import {
     Expression_parenExpressionContext,
     Expression_referenceExpressionContext,
     ExpressionContext
-} from "../generated_parser/MetamarkParser";
+} from "../generated_src/MetamarkParser";
 
 export class ExpressionTermUtils {
     static equals(a: ExpressionTerm, b: ExpressionTerm): boolean;

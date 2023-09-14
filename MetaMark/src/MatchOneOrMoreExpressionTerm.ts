@@ -1,5 +1,5 @@
 import {ExpressionTerm} from './ExpressionTerm';
-import {Expression_matchOneOrMoreExpressionContext} from "../generated_parser/MetamarkParser";
+import {Expression_matchOneOrMoreExpressionContext} from "../generated_src/MetamarkParser";
 import {ExpressionTermUtils} from "./ExpressionTermUtils";
 
 export class MatchOneOrMoreExpressionTerm extends ExpressionTerm {

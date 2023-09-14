@@ -1,4 +1,4 @@
-// Generated from ./src/generated_parser/MetamarkParser.g4 by ANTLR 4.9.0-SNAPSHOT
+// Generated from ./generated_src/MetamarkParser.g4 by ANTLR 4.9.0-SNAPSHOT
 
 
 import { ATN } from "antlr4ts/atn/ATN";

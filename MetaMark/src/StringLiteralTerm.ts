@@ -1,4 +1,4 @@
-import {StringLiteralContext} from "../generated_parser/MetamarkParser";
+import {StringLiteralContext} from "../generated_src/MetamarkParser";
 
 export class StringLiteralTerm {
 
