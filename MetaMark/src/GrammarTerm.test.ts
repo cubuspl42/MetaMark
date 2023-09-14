@@ -5,18 +5,23 @@ import {StringLiteralTerm} from "./StringLiteralTerm";
 
 describe("GrammarTerm", () => {
     test("It parses", () => {
-        const term =  GrammarTerm.parse(`
+        const term = GrammarTerm.parse(
+            "MyLang",
+            `
 %symbol Ex : "x"
-`
+`,
         );
 
         expect(term).toEqual(
-            new GrammarTerm([
-                new SymbolDefinitionTerm(
-                    "Ex",
-                    new StringLiteralTerm("x"),
-                ),
-            ]),
+            new GrammarTerm(
+                "MyLang",
+                [
+                    new SymbolDefinitionTerm(
+                        "Ex",
+                        new StringLiteralTerm("x"),
+                    ),
+                ],
+            ),
         );
     });
 });
