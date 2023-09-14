@@ -12,8 +12,12 @@ export class GrammarTerm {
         return arrayEquals(a.definitions, b.definitions, DefinitionTerm.equals);
     }
 
-    static parse(source: string) {
+    static parse(
+        name: string,
+        source: string,
+    ) {
         return GrammarTerm.build(
+            name,
             parseAsContext(
                 (parser) => parser.grammar_(),
                 source,
@@ -21,15 +25,34 @@ export class GrammarTerm {
         );
     }
 
-    static build(ctx: Grammar_Context): GrammarTerm {
-        return new GrammarTerm(ctx.definition().map(
-            (it) => DefinitionTerm.build(it))
+    static build(
+        name: string,
+        ctx: Grammar_Context,
+    ): GrammarTerm {
+        return new GrammarTerm(
+            name,
+            ctx.definition().map((it) => DefinitionTerm.build(it))
         );
     }
 
+    readonly name: string;
     readonly definitions: ReadonlyArray<DefinitionTerm>;
 
-    constructor(definitions: ReadonlyArray<DefinitionTerm>) {
+    constructor(
+        name: string,
+        definitions: ReadonlyArray<DefinitionTerm>,
+    ) {
+        this.name = name;
         this.definitions = definitions;
+    }
+
+    generate(): string {
+        return `
+export class ${this.name}Parser {
+    parse(source: string): string {
+        return "${this.name}";
+    }
+}
+`.trim();
     }
 }

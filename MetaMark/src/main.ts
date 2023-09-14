@@ -21,21 +21,17 @@ function main() {
 
     const grammarPath = grammarPaths[0]
 
+    const grammarBaseName = path.parse(grammarPath).name;
     const grammarSource = fs.readFileSync(grammarPath, 'utf-8');
 
-    const grammar = GrammarTerm.parse(grammarSource);
-
-    const generatedSource = `
-export class MarkParser {
-    parse(source: string): string {
-        return "foo";
-    }
-}
-`.trim();
+    const grammar = GrammarTerm.parse(
+        grammarBaseName,
+        grammarSource,
+    );
 
     fs.writeFileSync(
         path.join(outputPath, outputFileName),
-        generatedSource,
+        grammar.generate(),
         'utf-8',
     );
 }
