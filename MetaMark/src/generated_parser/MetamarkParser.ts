@@ -74,13 +74,13 @@ export class MetamarkParser extends Parser {
 	// tslint:enable:no-trailing-whitespace
 
 	// @Override
-	public get grammarFileName(): string { return "MetamarkParser.g4"; }
+	public override get grammarFileName(): string { return "MetamarkParser.g4"; }
 
 	// @Override
-	public get ruleNames(): string[] { return MetamarkParser.ruleNames; }
+	public override get ruleNames(): string[] { return MetamarkParser.ruleNames; }
 
 	// @Override
-	public get serializedATN(): string { return MetamarkParser._serializedATN; }
+	public override get serializedATN(): string { return MetamarkParser._serializedATN; }
 
 	protected createFailedPredicateException(predicate?: string, message?: string): FailedPredicateException {
 		return new FailedPredicateException(this, predicate, message);
@@ -251,7 +251,6 @@ export class MetamarkParser extends Parser {
 						this.match(MetamarkParser.Asterisk);
 						}
 						break;
-
 					case 2:
 						{
 						_localctx = new Expression_matchOneOrMoreExpressionContext(new ExpressionContext(_parentctx, _parentState));
@@ -265,7 +264,6 @@ export class MetamarkParser extends Parser {
 						this.match(MetamarkParser.Plus);
 						}
 						break;
-
 					case 3:
 						{
 						_localctx = new Expression_matchZeroOrOneExpressionContext(new ExpressionContext(_parentctx, _parentState));
@@ -393,10 +391,8 @@ export class MetamarkParser extends Parser {
 		switch (predIndex) {
 		case 0:
 			return this.precpred(this._ctx, 5);
-
 		case 1:
 			return this.precpred(this._ctx, 4);
-
 		case 2:
 			return this.precpred(this._ctx, 3);
 		}
@@ -451,7 +447,7 @@ export class Grammar_Context extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return MetamarkParser.RULE_grammar_; }
+	public override get ruleIndex(): number { return MetamarkParser.RULE_grammar_; }
 	// @Override
 	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitGrammar_) {
@@ -478,7 +474,7 @@ export class DefinitionContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return MetamarkParser.RULE_definition; }
+	public override get ruleIndex(): number { return MetamarkParser.RULE_definition; }
 	// @Override
 	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitDefinition) {
@@ -495,7 +491,7 @@ export class ExpressionContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return MetamarkParser.RULE_expression; }
+	public override get ruleIndex(): number { return MetamarkParser.RULE_expression; }
 	public copyFrom(ctx: ExpressionContext): void {
 		super.copyFrom(ctx);
 	}
@@ -621,7 +617,7 @@ export class ParenExpressionContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return MetamarkParser.RULE_parenExpression; }
+	public override get ruleIndex(): number { return MetamarkParser.RULE_parenExpression; }
 	// @Override
 	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitParenExpression) {
@@ -640,7 +636,7 @@ export class ReferenceExpressionContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return MetamarkParser.RULE_referenceExpression; }
+	public override get ruleIndex(): number { return MetamarkParser.RULE_referenceExpression; }
 	// @Override
 	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitReferenceExpression) {
@@ -658,7 +654,7 @@ export class StringLiteralContext extends ParserRuleContext {
 		super(parent, invokingState);
 	}
 	// @Override
-	public get ruleIndex(): number { return MetamarkParser.RULE_stringLiteral; }
+	public override get ruleIndex(): number { return MetamarkParser.RULE_stringLiteral; }
 	// @Override
 	public accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitStringLiteral) {
