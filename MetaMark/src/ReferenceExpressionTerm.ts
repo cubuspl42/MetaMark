@@ -1,4 +1,5 @@
 import {ExpressionTerm} from "./ExpressionTerm";
+import {ReferenceExpressionContext} from "../generated_src/MetamarkParser";
 
 export class ReferenceExpressionTerm {
     static equals(a: ReferenceExpressionTerm, b: ReferenceExpressionTerm): boolean;
@@ -10,8 +11,8 @@ export class ReferenceExpressionTerm {
         return a.referredIdentifier === b.referredIdentifier;
     }
 
-    static build(ctx: any): ReferenceExpressionTerm {
-        return new ReferenceExpressionTerm(ctx.referredIdentifier.text);
+    static build(ctx: ReferenceExpressionContext): ReferenceExpressionTerm {
+        return new ReferenceExpressionTerm(ctx._referredIdentifier.text ?? "");
     }
 
     readonly referredIdentifier: string;
