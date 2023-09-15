@@ -1,7 +1,8 @@
-import { ExpressionTerm } from "./ExpressionTerm";
-import { ReferenceExpressionContext } from "../generated_src/MetamarkParser";
+import {ExpressionRepresentation, ExpressionTerm} from "./ExpressionTerm";
+import {ReferenceExpressionContext} from "../generated_src/MetamarkParser";
 
-export class ReferenceExpressionTerm {
+
+export class ReferenceExpressionTerm extends ExpressionTerm {
     static equals(
         a: ReferenceExpressionTerm,
         b: ReferenceExpressionTerm,
@@ -21,6 +22,12 @@ export class ReferenceExpressionTerm {
     readonly referredIdentifier: string;
 
     constructor(referredIdentifier: string) {
+        super();
+
         this.referredIdentifier = referredIdentifier;
+    }
+
+    get representation(): ExpressionRepresentation {
+        throw new Error();
     }
 }

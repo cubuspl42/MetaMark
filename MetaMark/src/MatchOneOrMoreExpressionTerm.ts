@@ -1,6 +1,7 @@
-import { ExpressionTerm } from "./ExpressionTerm";
-import { Expression_matchOneOrMoreExpressionContext } from "../generated_src/MetamarkParser";
-import { ExpressionTermUtils } from "./ExpressionTermUtils";
+import {ExpressionRepresentation, ExpressionTerm} from "./ExpressionTerm";
+import {Expression_matchOneOrMoreExpressionContext} from "../generated_src/MetamarkParser";
+import {ExpressionTermUtils} from "./ExpressionTermUtils";
+import {DelegatingExpressionRepresentation} from "./DelegatingExpressionRepresentation";
 
 export class MatchOneOrMoreExpressionTerm extends ExpressionTerm {
     static equals(
@@ -31,5 +32,12 @@ export class MatchOneOrMoreExpressionTerm extends ExpressionTerm {
     constructor(repeatedExpression: ExpressionTerm) {
         super();
         this.repeatedExpression = repeatedExpression;
+    }
+
+    get representation(): ExpressionRepresentation {
+        return new DelegatingExpressionRepresentation(
+            "parseOneOrMore",
+            this.repeatedExpression,
+        );
     }
 }
