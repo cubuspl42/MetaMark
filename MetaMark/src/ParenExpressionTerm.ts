@@ -1,4 +1,4 @@
-import { ExpressionTerm } from "./ExpressionTerm";
+import {ExpressionRepresentation, ExpressionTerm} from "./ExpressionTerm";
 import { ParenExpressionContext } from "../generated_src/MetamarkParser";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
 
@@ -23,5 +23,9 @@ export class ParenExpressionTerm extends ExpressionTerm {
     constructor(innerExpression: ExpressionTerm) {
         super();
         this.innerExpression = innerExpression;
+    }
+
+    override get representation(): ExpressionRepresentation {
+        return this.innerExpression.representation;
     }
 }
