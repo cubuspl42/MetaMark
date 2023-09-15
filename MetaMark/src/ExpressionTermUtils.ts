@@ -12,6 +12,7 @@ import {
     Expression_referenceExpressionContext,
     ExpressionContext,
 } from "../generated_src/MetamarkParser";
+import { StaticScope } from "./StaticScope";
 
 export class ExpressionTermUtils {
     static equals(a: ExpressionTerm, b: ExpressionTerm): boolean;
@@ -28,17 +29,26 @@ export class ExpressionTermUtils {
         );
     }
 
-    static build(ctx: ExpressionContext): ExpressionTerm {
+    static build(
+        staticScope: StaticScope,
+        ctx: ExpressionContext,
+    ): ExpressionTerm {
         if (ctx instanceof Expression_parenExpressionContext) {
-            return ParenExpressionTerm.build(ctx.parenExpression());
+            return ParenExpressionTerm.build(
+                staticScope,
+                ctx.parenExpression(),
+            );
         } else if (ctx instanceof Expression_referenceExpressionContext) {
-            return ReferenceExpressionTerm.build(ctx.referenceExpression());
+            return ReferenceExpressionTerm.build(
+                staticScope,
+                ctx.referenceExpression(),
+            );
         } else if (ctx instanceof Expression_matchZeroOrMoreExpressionContext) {
-            return MatchZeroOrMoreExpressionTerm.build(ctx);
+            return MatchZeroOrMoreExpressionTerm.build(staticScope, ctx);
         } else if (ctx instanceof Expression_matchOneOrMoreExpressionContext) {
-            return MatchOneOrMoreExpressionTerm.build(ctx);
+            return MatchOneOrMoreExpressionTerm.build(staticScope, ctx);
         } else if (ctx instanceof Expression_matchZeroOrOneExpressionContext) {
-            return MatchZeroOrOneExpressionTerm.build(ctx);
+            return MatchZeroOrOneExpressionTerm.build(staticScope, ctx);
         } else {
             throw new Error(`Unsupported expression rule: ${ctx}`);
         }

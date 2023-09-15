@@ -1,4 +1,4 @@
-import {ExpressionTerm} from "./ExpressionTerm";
+import { ExpressionTerm } from "./ExpressionTerm";
 
 export class CallExpressionTerm {
     readonly callee: ExpressionTerm;

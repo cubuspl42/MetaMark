@@ -1,8 +1,11 @@
-import {DefinitionContext, Expression_stringLiteralContext,} from "../generated_src/MetamarkParser";
-import {MetamarkLexer} from "../generated_src/MetamarkLexer";
-import {ExpressionTerm} from "./ExpressionTerm";
-import {StringLiteralTerm} from "./StringLiteralTerm";
-import {ExpressionTermUtils} from "./ExpressionTermUtils";
+import {
+    DefinitionContext,
+    Expression_stringLiteralContext,
+} from "../generated_src/MetamarkParser";
+import { MetamarkLexer } from "../generated_src/MetamarkLexer";
+import { ExpressionTerm } from "./ExpressionTerm";
+import { StringLiteralTerm } from "./StringLiteralTerm";
+import { ExpressionTermUtils } from "./ExpressionTermUtils";
 import * as typescript_ast from "./typescript_ast";
 import {
     ArrowFunctionConstructorTerm,
@@ -10,9 +13,10 @@ import {
     ConstDefinitionTerm,
     DeclarationTerm,
     ReturnStatementTerm,
-    TypeReferenceTerm
+    TypeReferenceTerm,
 } from "./typescript_ast";
-import {FunctionArgumentDeclarationTerm} from "./typescript_ast/ArrowFunctionConstructorTerm";
+import { FunctionArgumentDeclarationTerm } from "./typescript_ast/ArrowFunctionConstructorTerm";
+import { StaticScope } from "./StaticScope";
 
 const nullTerm = typescript_ast.ReferenceExpressionTerm.nullTerm;
 
@@ -21,7 +25,7 @@ const returnNullTerm = BlockTerm.buildReturnBlock({
 });
 
 abstract class ParseFunctionRepresentation {
-    abstract buildExpression(): typescript_ast.ExpressionTerm
+    abstract buildExpression(): typescript_ast.ExpressionTerm;
 }
 
 export abstract class DefinitionTerm {
@@ -34,7 +38,10 @@ export abstract class DefinitionTerm {
         );
     }
 
-    static build(ctx: DefinitionContext): DefinitionTerm {
+    static build(
+        staticScope: StaticScope,
+        ctx: DefinitionContext,
+    ): DefinitionTerm {
         const kindType = ctx._kind.type;
         const body = ctx._body;
 
@@ -49,7 +56,7 @@ export abstract class DefinitionTerm {
         } else if (kindType === MetamarkLexer.RuleKeyword) {
             return new RuleDefinitionTerm(
                 ctx._name.text ?? "",
-                ExpressionTermUtils.build(body),
+                ExpressionTermUtils.build(staticScope, body),
             );
         } else {
             throw new Error(`Unsupported definition kind token: ${ctx._kind}`);
@@ -57,7 +64,6 @@ export abstract class DefinitionTerm {
     }
 
     abstract readonly name: string;
-
 }
 
 abstract class DefinitionRepresentation {
@@ -76,7 +82,7 @@ abstract class DefinitionRepresentation {
     });
 
     static buildIfNullReturnNullStatement(args: {
-        readonly referredName: string
+        readonly referredName: string;
     }) {
         return new typescript_ast.IfStatementTerm({
             condition: new typescript_ast.BinaryExpressionTerm({
@@ -87,17 +93,15 @@ abstract class DefinitionRepresentation {
                 right: nullTerm,
             }),
             thenBlock: returnNullTerm,
-        })
+        });
     }
 
-    static buildReturnReferred(args: {
-        readonly referredName: string
-    }) {
+    static buildReturnReferred(args: { readonly referredName: string }) {
         return new typescript_ast.ReturnStatementTerm({
             returnedExpression: new typescript_ast.ReferenceExpressionTerm({
                 referredName: args.referredName,
-            })
-        })
+            }),
+        });
     }
 
     abstract get kind(): string;
@@ -105,10 +109,10 @@ abstract class DefinitionRepresentation {
     abstract get name(): string;
 
     private buildNodeTypeName() {
-        const firstLetter = this.name[0]
+        const firstLetter = this.name[0];
         const nameTail = this.name.substring(1);
 
-        return firstLetter.toUpperCase() + nameTail
+        return firstLetter.toUpperCase() + nameTail;
     }
 
     private buildParseFunctionName(): string {
@@ -137,7 +141,7 @@ abstract class DefinitionRepresentation {
                         name: DefinitionRepresentation.charStreamName,
                         type: new TypeReferenceTerm({
                             referredName:
-                            DefinitionRepresentation.charStreamTypeName,
+                                DefinitionRepresentation.charStreamTypeName,
                         }),
                     }),
                 ],
@@ -179,7 +183,7 @@ class SymbolRepresentation extends DefinitionRepresentation {
                 SymbolRepresentation.buildReturnReferred({
                     referredName: "symbol",
                 }),
-            ]
+            ],
         });
     }
 }

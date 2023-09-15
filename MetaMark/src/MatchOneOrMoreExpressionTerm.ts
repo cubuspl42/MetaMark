@@ -1,7 +1,8 @@
-import {ExpressionRepresentation, ExpressionTerm} from "./ExpressionTerm";
-import {Expression_matchOneOrMoreExpressionContext} from "../generated_src/MetamarkParser";
-import {ExpressionTermUtils} from "./ExpressionTermUtils";
-import {DelegatingExpressionRepresentation} from "./DelegatingExpressionRepresentation";
+import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
+import { Expression_matchOneOrMoreExpressionContext } from "../generated_src/MetamarkParser";
+import { ExpressionTermUtils } from "./ExpressionTermUtils";
+import { DelegatingExpressionRepresentation } from "./DelegatingExpressionRepresentation";
+import { StaticScope } from "./StaticScope";
 
 export class MatchOneOrMoreExpressionTerm extends ExpressionTerm {
     static equals(
@@ -20,10 +21,11 @@ export class MatchOneOrMoreExpressionTerm extends ExpressionTerm {
     }
 
     static build(
+        staticScope: StaticScope,
         ctx: Expression_matchOneOrMoreExpressionContext,
     ): MatchOneOrMoreExpressionTerm {
         return new MatchOneOrMoreExpressionTerm(
-            ExpressionTermUtils.build(ctx._repeatedExpression),
+            ExpressionTermUtils.build(staticScope, ctx._repeatedExpression),
         );
     }
 

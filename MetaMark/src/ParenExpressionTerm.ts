@@ -1,6 +1,7 @@
-import {ExpressionRepresentation, ExpressionTerm} from "./ExpressionTerm";
+import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
 import { ParenExpressionContext } from "../generated_src/MetamarkParser";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
+import { StaticScope } from "./StaticScope";
 
 export class ParenExpressionTerm extends ExpressionTerm {
     static equals(a: ParenExpressionTerm, b: ParenExpressionTerm): boolean;
@@ -12,9 +13,12 @@ export class ParenExpressionTerm extends ExpressionTerm {
         return ExpressionTermUtils.equals(a.innerExpression, b.innerExpression);
     }
 
-    static build(ctx: ParenExpressionContext): ParenExpressionTerm {
+    static build(
+        staticScope: StaticScope,
+        ctx: ParenExpressionContext,
+    ): ParenExpressionTerm {
         return new ParenExpressionTerm(
-            ExpressionTermUtils.build(ctx._innerExpression),
+            ExpressionTermUtils.build(staticScope, ctx._innerExpression),
         );
     }
 

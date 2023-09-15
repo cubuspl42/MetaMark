@@ -1,7 +1,8 @@
-import {ExpressionRepresentation, ExpressionTerm} from "./ExpressionTerm";
+import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
 import { Expression_matchZeroOrMoreExpressionContext } from "../generated_src/MetamarkParser";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
-import {DelegatingExpressionRepresentation} from "./DelegatingExpressionRepresentation";
+import { DelegatingExpressionRepresentation } from "./DelegatingExpressionRepresentation";
+import { StaticScope } from "./StaticScope";
 
 export class MatchZeroOrMoreExpressionTerm extends ExpressionTerm {
     static equals(
@@ -20,10 +21,11 @@ export class MatchZeroOrMoreExpressionTerm extends ExpressionTerm {
     }
 
     static build(
+        staticScope: StaticScope,
         ctx: Expression_matchZeroOrMoreExpressionContext,
     ): MatchZeroOrMoreExpressionTerm {
         return new MatchZeroOrMoreExpressionTerm(
-            ExpressionTermUtils.build(ctx._repeatedExpression),
+            ExpressionTermUtils.build(staticScope, ctx._repeatedExpression),
         );
     }
 

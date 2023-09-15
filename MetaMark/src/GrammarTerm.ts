@@ -1,6 +1,7 @@
 import { arrayEquals, parseAsContext } from "./utils";
 import { Grammar_Context } from "../generated_src/MetamarkParser";
 import { DefinitionTerm } from "./DefinitionTerm";
+import { BlockStaticScope, LoopedStaticScope } from "./StaticScope";
 
 export class GrammarTerm {
     static equals(a: GrammarTerm, b: GrammarTerm): boolean;
@@ -20,10 +21,17 @@ export class GrammarTerm {
     }
 
     static build(name: string, ctx: Grammar_Context): GrammarTerm {
-        return new GrammarTerm(
-            name,
-            ctx.definition().map((it) => DefinitionTerm.build(it)),
-        );
+        const definitions = LoopedStaticScope.looped((loopedScope) => {
+            const definitions = ctx
+                .definition()
+                .map((it) => DefinitionTerm.build(loopedScope, it));
+
+            const blockScope = new BlockStaticScope(definitions);
+
+            return [definitions, blockScope];
+        });
+
+        return new GrammarTerm(name, definitions);
     }
 
     readonly name: string;

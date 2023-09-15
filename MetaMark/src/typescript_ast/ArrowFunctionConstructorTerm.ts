@@ -1,5 +1,5 @@
-import {TypeExpressionTerm} from "./TypeExpressionTerm";
-import {BlockTerm} from "./BlockTerm";
+import { TypeExpressionTerm } from "./TypeExpressionTerm";
+import { BlockTerm } from "./BlockTerm";
 
 export class FunctionArgumentDeclarationTerm {
     readonly name: string;
@@ -17,9 +17,9 @@ export class ArrowFunctionConstructorTerm {
     readonly body: BlockTerm;
 
     constructor(args: {
-        readonly arguments: ReadonlyArray<FunctionArgumentDeclarationTerm>,
-        readonly returnType: TypeExpressionTerm,
-        readonly body: BlockTerm,
+        readonly arguments: ReadonlyArray<FunctionArgumentDeclarationTerm>;
+        readonly returnType: TypeExpressionTerm;
+        readonly body: BlockTerm;
     }) {
         this.arguments = args.arguments;
         this.returnType = args.returnType;
