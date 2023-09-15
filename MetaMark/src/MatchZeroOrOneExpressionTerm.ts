@@ -1,18 +1,26 @@
-import {ExpressionTerm} from './ExpressionTerm';
-import {Expression_matchZeroOrOneExpressionContext} from "../generated_src/MetamarkParser";
-import {ExpressionTermUtils} from "./ExpressionTermUtils";
+import { ExpressionTerm } from "./ExpressionTerm";
+import { Expression_matchZeroOrOneExpressionContext } from "../generated_src/MetamarkParser";
+import { ExpressionTermUtils } from "./ExpressionTermUtils";
 
 export class MatchZeroOrOneExpressionTerm extends ExpressionTerm {
-    static equals(a: MatchZeroOrOneExpressionTerm, b: MatchZeroOrOneExpressionTerm): boolean;
+    static equals(
+        a: MatchZeroOrOneExpressionTerm,
+        b: MatchZeroOrOneExpressionTerm,
+    ): boolean;
     static equals(a: unknown, b: unknown): boolean | undefined;
 
     static equals(a: unknown, b: unknown): boolean | undefined {
         if (!(a instanceof MatchZeroOrOneExpressionTerm)) return undefined;
         if (!(b instanceof MatchZeroOrOneExpressionTerm)) return undefined;
-        return ExpressionTermUtils.equals(a.optionalExpression, b.optionalExpression);
+        return ExpressionTermUtils.equals(
+            a.optionalExpression,
+            b.optionalExpression,
+        );
     }
 
-    static build(ctx: Expression_matchZeroOrOneExpressionContext): MatchZeroOrOneExpressionTerm {
+    static build(
+        ctx: Expression_matchZeroOrOneExpressionContext,
+    ): MatchZeroOrOneExpressionTerm {
         return new MatchZeroOrOneExpressionTerm(
             ExpressionTermUtils.build(ctx._optionalExpression),
         );

@@ -1,8 +1,11 @@
-import {ExpressionTerm} from "./ExpressionTerm";
-import {ReferenceExpressionContext} from "../generated_src/MetamarkParser";
+import { ExpressionTerm } from "./ExpressionTerm";
+import { ReferenceExpressionContext } from "../generated_src/MetamarkParser";
 
 export class ReferenceExpressionTerm {
-    static equals(a: ReferenceExpressionTerm, b: ReferenceExpressionTerm): boolean;
+    static equals(
+        a: ReferenceExpressionTerm,
+        b: ReferenceExpressionTerm,
+    ): boolean;
     static equals(a: unknown, b: unknown): boolean | undefined;
 
     static equals(a: unknown, b: unknown): boolean | undefined {

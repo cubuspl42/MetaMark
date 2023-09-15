@@ -1,7 +1,7 @@
-import {GrammarTerm} from "./GrammarTerm";
-import {describe, test, expect} from "@jest/globals";
-import {SymbolDefinitionTerm} from "./DefinitionTerm";
-import {StringLiteralTerm} from "./StringLiteralTerm";
+import { GrammarTerm } from "./GrammarTerm";
+import { describe, test, expect } from "@jest/globals";
+import { SymbolDefinitionTerm } from "./DefinitionTerm";
+import { StringLiteralTerm } from "./StringLiteralTerm";
 
 describe("GrammarTerm", () => {
     test("It parses", () => {
@@ -13,15 +13,9 @@ describe("GrammarTerm", () => {
         );
 
         expect(term).toEqual(
-            new GrammarTerm(
-                "MyLang",
-                [
-                    new SymbolDefinitionTerm(
-                        "Ex",
-                        new StringLiteralTerm("x"),
-                    ),
-                ],
-            ),
+            new GrammarTerm("MyLang", [
+                new SymbolDefinitionTerm("Ex", new StringLiteralTerm("x")),
+            ]),
         );
     });
 });
