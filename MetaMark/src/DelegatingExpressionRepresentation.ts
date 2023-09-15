@@ -1,4 +1,4 @@
-import {ExpressionRepresentation, ExpressionTerm} from "./ExpressionTerm";
+import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
 import * as typescript_ast from "./typescript_ast";
 
 export class DelegatingExpressionRepresentation extends ExpressionRepresentation {

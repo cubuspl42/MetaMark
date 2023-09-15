@@ -1,6 +1,8 @@
-import {ExpressionRepresentation, ExpressionTerm} from "./ExpressionTerm";
-import {ReferenceExpressionContext} from "../generated_src/MetamarkParser";
-
+import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
+import { ReferenceExpressionContext } from "../generated_src/MetamarkParser";
+import { StaticScope } from "./StaticScope";
+import { name } from "ts-loader";
+import { DefinitionTerm } from "./DefinitionTerm";
 
 export class ReferenceExpressionTerm extends ExpressionTerm {
     static equals(
@@ -12,19 +14,35 @@ export class ReferenceExpressionTerm extends ExpressionTerm {
     static equals(a: unknown, b: unknown): boolean | undefined {
         if (!(a instanceof ReferenceExpressionTerm)) return undefined;
         if (!(b instanceof ReferenceExpressionTerm)) return undefined;
-        return a.referredIdentifier === b.referredIdentifier;
+        return a.referredName === b.referredName;
     }
 
-    static build(ctx: ReferenceExpressionContext): ReferenceExpressionTerm {
-        return new ReferenceExpressionTerm(ctx._referredIdentifier.text ?? "");
+    static build(
+        staticScope: StaticScope,
+        ctx: ReferenceExpressionContext,
+    ): ReferenceExpressionTerm {
+        return new ReferenceExpressionTerm(
+            staticScope,
+            ctx._referredIdentifier.text ?? "",
+        );
     }
 
-    readonly referredIdentifier: string;
+    private readonly _staticScope: StaticScope;
 
-    constructor(referredIdentifier: string) {
+    readonly referredName: string;
+
+    constructor(
+        staticScope: StaticScope,
+        referredIdentifier: string,
+    ) {
         super();
 
-        this.referredIdentifier = referredIdentifier;
+        this._staticScope = staticScope;
+        this.referredName = referredIdentifier;
+    }
+
+    get referredDefinition(): DefinitionTerm | null {
+        return this._staticScope.getDefinition(this.referredName)
     }
 
     get representation(): ExpressionRepresentation {

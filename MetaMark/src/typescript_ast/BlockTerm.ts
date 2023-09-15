@@ -1,10 +1,10 @@
-import {StatementTerm} from "./StatementTerm";
-import {ReturnStatementTerm} from "./ReturnStatementTerm";
-import {ExpressionTerm} from "./ExpressionTerm";
+import { StatementTerm } from "./StatementTerm";
+import { ReturnStatementTerm } from "./ReturnStatementTerm";
+import { ExpressionTerm } from "./ExpressionTerm";
 
 export class BlockTerm {
     static buildReturnBlock(args: {
-        readonly returnedExpression: ExpressionTerm,
+        readonly returnedExpression: ExpressionTerm;
     }) {
         return new BlockTerm({
             innerStatements: [
