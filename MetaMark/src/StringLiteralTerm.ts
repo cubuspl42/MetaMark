@@ -1,7 +1,6 @@
-import {StringLiteralContext} from "../generated_src/MetamarkParser";
+import { StringLiteralContext } from "../generated_src/MetamarkParser";
 
 export class StringLiteralTerm {
-
     static equals(a: StringLiteralTerm, b: StringLiteralTerm): boolean;
     static equals(a: unknown, b: unknown): boolean | undefined;
 

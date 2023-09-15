@@ -2,27 +2,32 @@ import {
     DefinitionContext,
     Expression_stringLiteralContext,
     MetamarkParser,
-    StringLiteralContext
+    StringLiteralContext,
 } from "../generated_src/MetamarkParser";
-import {MetamarkLexer} from "../generated_src/MetamarkLexer";
-import {ExpressionTerm} from "./ExpressionTerm";
-import {StringLiteralTerm} from "./StringLiteralTerm";
-import {arrayEquals} from "./utils";
-import {ExpressionTermUtils} from "./ExpressionTermUtils";
+import { MetamarkLexer } from "../generated_src/MetamarkLexer";
+import { ExpressionTerm } from "./ExpressionTerm";
+import { StringLiteralTerm } from "./StringLiteralTerm";
+import { arrayEquals } from "./utils";
+import { ExpressionTermUtils } from "./ExpressionTermUtils";
 
 export abstract class DefinitionTerm {
     static equals(a: DefinitionTerm, b: DefinitionTerm): boolean;
     static equals(a: unknown, b: unknown): boolean | undefined;
 
     static equals(a: unknown, b: unknown): boolean | undefined {
-        return SymbolDefinitionTerm.equals(a, b) ?? RuleDefinitionTerm.equals(a, b);
+        return (
+            SymbolDefinitionTerm.equals(a, b) ?? RuleDefinitionTerm.equals(a, b)
+        );
     }
 
     static build(ctx: DefinitionContext): DefinitionTerm {
         const kindType = ctx._kind.type;
         const body = ctx._body;
 
-        if (kindType === MetamarkLexer.SymbolKeyword && body instanceof Expression_stringLiteralContext) {
+        if (
+            kindType === MetamarkLexer.SymbolKeyword &&
+            body instanceof Expression_stringLiteralContext
+        ) {
             return new SymbolDefinitionTerm(
                 ctx._name.text ?? "",
                 StringLiteralTerm.build(body.stringLiteral()),
@@ -41,7 +46,10 @@ export abstract class DefinitionTerm {
 }
 
 export class SymbolDefinitionTerm extends DefinitionTerm {
-    static override equals(a: SymbolDefinitionTerm, b: SymbolDefinitionTerm): boolean;
+    static override equals(
+        a: SymbolDefinitionTerm,
+        b: SymbolDefinitionTerm,
+    ): boolean;
     static override equals(a: unknown, b: unknown): boolean | undefined;
 
     static override equals(a: unknown, b: unknown): boolean | undefined {
@@ -62,7 +70,10 @@ export class SymbolDefinitionTerm extends DefinitionTerm {
 }
 
 export class RuleDefinitionTerm extends DefinitionTerm {
-    static override equals(a: RuleDefinitionTerm, b: RuleDefinitionTerm): boolean;
+    static override equals(
+        a: RuleDefinitionTerm,
+        b: RuleDefinitionTerm,
+    ): boolean;
     static override equals(a: unknown, b: unknown): boolean | undefined;
 
     static override equals(a: unknown, b: unknown): boolean | undefined {

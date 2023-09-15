@@ -1,6 +1,6 @@
-import {ExpressionTerm} from './ExpressionTerm';
-import {ParenExpressionContext} from "../generated_src/MetamarkParser";
-import {ExpressionTermUtils} from "./ExpressionTermUtils";
+import { ExpressionTerm } from "./ExpressionTerm";
+import { ParenExpressionContext } from "../generated_src/MetamarkParser";
+import { ExpressionTermUtils } from "./ExpressionTermUtils";
 
 export class ParenExpressionTerm extends ExpressionTerm {
     static equals(a: ParenExpressionTerm, b: ParenExpressionTerm): boolean;

@@ -1,7 +1,7 @@
-import {ParserRuleContext} from "antlr4ts/ParserRuleContext";
-import {MetamarkParser} from "../generated_src/MetamarkParser";
-import {CharStreams, CommonTokenStream} from "antlr4ts";
-import {MetamarkLexer} from "../generated_src/MetamarkLexer";
+import { ParserRuleContext } from "antlr4ts/ParserRuleContext";
+import { MetamarkParser } from "../generated_src/MetamarkParser";
+import { CharStreams, CommonTokenStream } from "antlr4ts";
+import { MetamarkLexer } from "../generated_src/MetamarkLexer";
 
 export function parseAsContext<C extends ParserRuleContext>(
     rule: (p: MetamarkParser) => C,
@@ -26,7 +26,7 @@ export function arrayEquals<A>(
         const i = a.indexOf(ai);
         const bi = b[i];
 
-        if (!(equals(ai, bi))) {
+        if (!equals(ai, bi)) {
             return false;
         }
     }

@@ -1,2 +1,1 @@
-export abstract class ExpressionTerm {
-}
+export abstract class ExpressionTerm {}

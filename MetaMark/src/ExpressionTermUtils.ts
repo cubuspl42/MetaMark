@@ -1,16 +1,16 @@
-import {ParenExpressionTerm} from './ParenExpressionTerm';
-import {ReferenceExpressionTerm} from './ReferenceExpressionTerm';
-import {MatchZeroOrMoreExpressionTerm} from './MatchZeroOrMoreExpressionTerm';
-import {MatchOneOrMoreExpressionTerm} from './MatchOneOrMoreExpressionTerm';
-import {MatchZeroOrOneExpressionTerm} from './MatchZeroOrOneExpressionTerm';
-import {ExpressionTerm} from './ExpressionTerm';
+import { ParenExpressionTerm } from "./ParenExpressionTerm";
+import { ReferenceExpressionTerm } from "./ReferenceExpressionTerm";
+import { MatchZeroOrMoreExpressionTerm } from "./MatchZeroOrMoreExpressionTerm";
+import { MatchOneOrMoreExpressionTerm } from "./MatchOneOrMoreExpressionTerm";
+import { MatchZeroOrOneExpressionTerm } from "./MatchZeroOrOneExpressionTerm";
+import { ExpressionTerm } from "./ExpressionTerm";
 import {
     Expression_matchOneOrMoreExpressionContext,
     Expression_matchZeroOrMoreExpressionContext,
     Expression_matchZeroOrOneExpressionContext,
     Expression_parenExpressionContext,
     Expression_referenceExpressionContext,
-    ExpressionContext
+    ExpressionContext,
 } from "../generated_src/MetamarkParser";
 
 export class ExpressionTermUtils {
@@ -18,7 +18,6 @@ export class ExpressionTermUtils {
     static equals(a: unknown, b: unknown): boolean | undefined;
 
     static equals(a: unknown, b: unknown): boolean | undefined {
-
         return (
             ParenExpressionTerm.equals(a, b) ??
             ReferenceExpressionTerm.equals(a, b) ??
@@ -41,10 +40,9 @@ export class ExpressionTermUtils {
         } else if (ctx instanceof Expression_matchZeroOrOneExpressionContext) {
             return MatchZeroOrOneExpressionTerm.build(ctx);
         } else {
-            throw new Error(`Unsupported expression rule: ${ctx}`)
+            throw new Error(`Unsupported expression rule: ${ctx}`);
         }
     }
 
-    private constructor() {
-    }
+    private constructor() {}
 }
