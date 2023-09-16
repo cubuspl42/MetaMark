@@ -2,7 +2,7 @@ import { arrayEquals, parseAsContext } from "./utils";
 import { Grammar_Context } from "../generated_src/MetamarkParser";
 import { DefinitionTerm } from "./DefinitionTerm";
 import { BlockStaticScope, LoopedStaticScope } from "./StaticScope";
-import { ModuleTerm } from "./typescript_ast";
+import { ImportAllTerm, ModuleTerm, StringLiteralTerm } from "./typescript_ast";
 import { DefinitionTermUtils } from "./DefinitionTermUtils";
 
 export class GrammarTerm {
@@ -50,6 +50,14 @@ export class GrammarTerm {
 
     generateModule(): ModuleTerm {
         return new ModuleTerm({
+            imports: [
+                new ImportAllTerm({
+                    aliasName: "runtime",
+                    modulePath: new StringLiteralTerm({
+                        value: "./runtime",
+                    }),
+                }),
+            ],
             declarations: [
                 ...this.definitions.map((definition) =>
                     definition.nodeGenerator.generateInterfaceDeclaration(),

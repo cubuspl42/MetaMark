@@ -1,17 +1,6 @@
 import { ParseFunctionGenerator } from "./ParseFunctionGenerator";
-import {
-    BlockTerm,
-    ConstDefinitionTerm,
-    ReturnStatementTerm,
-} from "../typescript_ast";
-import {
-    generateIfNullReturnNullStatement,
-    generateParseCall,
-    generateReturnReference,
-} from "../generationUtils";
+import { BlockTerm, ReturnStatementTerm } from "../typescript_ast";
 import { DefinitionTerm } from "../DefinitionTerm";
-import { NodeGenerator } from "./NodeGenerator";
-import { TokenParseFunctionGenerator } from "./TokenParseFunctionGenerator";
 import { ElementDefinitionTerm } from "../ElementDefinitionTerm";
 
 export class ElementParseFunctionGenerator extends ParseFunctionGenerator {
@@ -32,7 +21,7 @@ export class ElementParseFunctionGenerator extends ParseFunctionGenerator {
         return new BlockTerm({
             innerStatements: [
                 new ReturnStatementTerm({
-                    returnedExpression: generateParseCall({
+                    returnedExpression: ParseFunctionGenerator.generateParseCall({
                         callee: body.generateParseFunctionExpression(),
                     }),
                 }),

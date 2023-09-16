@@ -1,29 +1,33 @@
 import * as typescript_ast from "../typescript_ast";
-import {
-    ArrowFunctionConstructorTerm,
-    BlockTerm,
-    TypeReferenceTerm,
-} from "../typescript_ast";
+import { ArrowFunctionConstructorTerm, BlockTerm, ExpressionTerm, ReferenceExpressionTerm } from "../typescript_ast";
 import { FunctionArgumentDeclarationTerm } from "../typescript_ast/ArrowFunctionConstructorTerm";
 import { DefinitionTerm } from "../DefinitionTerm";
 import { NodeGenerator } from "./NodeGenerator";
 
-export abstract class ParseFunctionGenerator {
-    private static charStreamName = "charStream";
-    private static charStreamTypeName = "CharStream";
+import { charStreamTypeReference, parseStringReference } from "./runtime";
 
-    static parseStringCall = new typescript_ast.CallExpressionTerm({
-        callee: new typescript_ast.ReferenceExpressionTerm({
-            referredName: "parseString",
-        }),
-        arguments: [
-            new typescript_ast.ReferenceExpressionTerm({
-                referredName: ParseFunctionGenerator.charStreamName,
-            }),
-        ],
+export abstract class ParseFunctionGenerator {
+    private static readonly charStreamArgumentName = "charStream";
+
+    private static readonly charStreamArgumentReference = new typescript_ast.ReferenceExpressionTerm({
+        referredName: this.charStreamArgumentName,
     });
 
-    protected constructor(private kind: string) {}
+    static generateParseCall(args: { readonly callee: ExpressionTerm }) {
+        return new typescript_ast.CallExpressionTerm({
+            callee: args.callee,
+            arguments: [
+                new ReferenceExpressionTerm({
+                    referredName: "charStream",
+                }),
+            ],
+        });
+    }
+
+    static parseStringCall = this.generateParseCall({ callee: parseStringReference });
+
+    protected constructor(private kind: string) {
+    }
 
     protected abstract get definition(): DefinitionTerm;
 
@@ -40,11 +44,8 @@ export abstract class ParseFunctionGenerator {
             body: new ArrowFunctionConstructorTerm({
                 arguments: [
                     new FunctionArgumentDeclarationTerm({
-                        name: ParseFunctionGenerator.charStreamName,
-                        type: new TypeReferenceTerm({
-                            referredName:
-                                ParseFunctionGenerator.charStreamTypeName,
-                        }),
+                        name: ParseFunctionGenerator.charStreamArgumentName,
+                        type: charStreamTypeReference,
                     }),
                 ],
                 returnType: this.nodeGenerator.generateTypeReference(),

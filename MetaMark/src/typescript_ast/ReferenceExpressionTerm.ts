@@ -1,6 +1,7 @@
 import { IExpressionTerm } from "./ExpressionTerm";
+import { ITypeExpressionTerm } from "./TypeExpressionTerm";
 
-export class ReferenceExpressionTerm implements IExpressionTerm {
+export class ReferenceExpressionTerm implements IExpressionTerm, ITypeExpressionTerm {
     static nullTerm = new ReferenceExpressionTerm({
         referredName: "null",
     });

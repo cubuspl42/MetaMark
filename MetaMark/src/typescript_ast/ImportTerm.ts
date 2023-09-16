@@ -1,13 +1,19 @@
 import { StringLiteralTerm } from "./StringLiteralTerm";
 
-export class ImportTerm {
-    readonly moduleName: StringLiteralTerm;
-    readonly namedImports: ReadonlyArray<string>;
-    constructor(args: {
-        moduleName: StringLiteralTerm;
-        namedImports: string[];
-    }) {
-        this.moduleName = args.moduleName;
-        this.namedImports = args.namedImports;
+export type ImportTerm = ImportAllTerm;
+
+export class ImportAllTerm {
+    readonly aliasName: string;
+    readonly modulePath: StringLiteralTerm;
+
+    constructor(args: { aliasName: string; modulePath: StringLiteralTerm }) {
+        this.aliasName = args.aliasName;
+        this.modulePath = args.modulePath;
+    }
+
+    toPrettyString(): string {
+        return `import * as ${
+            this.aliasName
+        } from ${this.modulePath.toPrettyString()};`;
     }
 }
