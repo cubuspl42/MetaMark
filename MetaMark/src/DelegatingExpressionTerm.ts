@@ -1,7 +1,7 @@
-import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
+import { ExpressionTerm } from "./ExpressionTerm";
 import * as typescript_ast from "./typescript_ast";
 
-export class DelegatingExpressionRepresentation extends ExpressionRepresentation {
+export class DelegatingExpressionTerm extends ExpressionTerm {
     constructor(
         readonly buildFunctionName: string,
         readonly delegateExpressionTerm: ExpressionTerm,
@@ -15,7 +15,7 @@ export class DelegatingExpressionRepresentation extends ExpressionRepresentation
                 referredName: `build_${this.buildFunctionName}`,
             }),
             arguments: [
-                this.delegateExpressionTerm.representation.generateParseFunctionExpression(),
+                this.delegateExpressionTerm.generateParseFunctionExpression(),
             ],
         });
     }

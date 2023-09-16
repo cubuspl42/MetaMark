@@ -1,10 +1,10 @@
-import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
+import { ExpressionTerm } from "./ExpressionTerm";
 import { Expression_matchZeroOrMoreExpressionContext } from "../generated_src/MetamarkParser";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
-import { DelegatingExpressionRepresentation } from "./DelegatingExpressionRepresentation";
+import { DelegatingExpressionTerm } from "./DelegatingExpressionTerm";
 import { StaticScope } from "./StaticScope";
 
-export class MatchZeroOrMoreExpressionTerm extends ExpressionTerm {
+export class MatchZeroOrMoreExpressionTerm extends DelegatingExpressionTerm {
     static equals(
         a: MatchZeroOrMoreExpressionTerm,
         b: MatchZeroOrMoreExpressionTerm,
@@ -31,15 +31,9 @@ export class MatchZeroOrMoreExpressionTerm extends ExpressionTerm {
 
     readonly repeatedExpression: ExpressionTerm;
 
-    constructor(expression: ExpressionTerm) {
-        super();
-        this.repeatedExpression = expression;
-    }
+    constructor(repeatedExpression: ExpressionTerm) {
+        super("parseZeroOrMore", repeatedExpression);
 
-    get representation(): ExpressionRepresentation {
-        return new DelegatingExpressionRepresentation(
-            "parseZeroOrMore",
-            this.repeatedExpression,
-        );
+        this.repeatedExpression = repeatedExpression;
     }
 }
