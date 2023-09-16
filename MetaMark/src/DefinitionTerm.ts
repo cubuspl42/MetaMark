@@ -11,18 +11,14 @@ import {
     ArrowFunctionConstructorTerm,
     BlockTerm,
     ConstDefinitionTerm,
-    DeclarationTerm,
-    ReturnStatementTerm,
     TypeReferenceTerm,
 } from "./typescript_ast";
 import { FunctionArgumentDeclarationTerm } from "./typescript_ast/ArrowFunctionConstructorTerm";
 import { StaticScope } from "./StaticScope";
-
-const nullTerm = typescript_ast.ReferenceExpressionTerm.nullTerm;
-
-const returnNullTerm = BlockTerm.buildReturnBlock({
-    returnedExpression: nullTerm,
-});
+import {
+    generateIfNullReturnNullStatement,
+    generateReturnReference,
+} from "./generationUtils";
 
 abstract class ParseFunctionRepresentation {
     abstract buildExpression(): typescript_ast.ExpressionTerm;
@@ -64,6 +60,8 @@ export abstract class DefinitionTerm {
     }
 
     abstract readonly name: string;
+
+    abstract get representation(): DefinitionRepresentation;
 }
 
 abstract class DefinitionRepresentation {
@@ -81,60 +79,16 @@ abstract class DefinitionRepresentation {
         ],
     });
 
-    static buildIfNullReturnNullStatement(args: {
-        readonly referredName: string;
-    }) {
-        return new typescript_ast.IfStatementTerm({
-            condition: new typescript_ast.BinaryExpressionTerm({
-                left: new typescript_ast.ReferenceExpressionTerm({
-                    referredName: args.referredName,
-                }),
-                operator: "!==",
-                right: nullTerm,
-            }),
-            thenBlock: returnNullTerm,
-        });
-    }
-
-    static buildReturnReferred(args: { readonly referredName: string }) {
-        return new typescript_ast.ReturnStatementTerm({
-            returnedExpression: new typescript_ast.ReferenceExpressionTerm({
-                referredName: args.referredName,
-            }),
-        });
-    }
-
-    abstract get kind(): string;
-
-    abstract get name(): string;
-
-    private buildNodeTypeName() {
-        const firstLetter = this.name[0];
-        const nameTail = this.name.substring(1);
-
-        return firstLetter.toUpperCase() + nameTail;
-    }
-
-    private buildParseFunctionName(): string {
-        return `parse${this.kind}_${this.name}`;
-    }
-
-    private buildNodeTypeReference() {
-        return new typescript_ast.TypeReferenceTerm({
-            referredName: this.buildNodeTypeName(),
-        });
-    }
-
-    private buildParseFunctionReference() {
+    generateParseFunctionReference() {
         return new typescript_ast.ReferenceExpressionTerm({
-            referredName: this.buildParseFunctionName(),
+            referredName: this.parseFunctionName,
         });
     }
 
-    private buildParseFunctionDefinition() {
+    generateParseFunctionDefinition() {
         return new typescript_ast.ConstDefinitionTerm({
             modifier: "export",
-            name: this.name,
+            name: this.parseFunctionName,
             body: new ArrowFunctionConstructorTerm({
                 arguments: [
                     new FunctionArgumentDeclarationTerm({
@@ -145,13 +99,34 @@ abstract class DefinitionRepresentation {
                         }),
                     }),
                 ],
-                returnType: this.buildNodeTypeReference(),
-                body: this.buildParseFunctionBody(),
+                returnType: this.generateNodeTypeReference(),
+                body: this.generateParseFunctionBody(),
             }),
         });
     }
 
-    abstract buildParseFunctionBody(): BlockTerm;
+    protected abstract get kind(): string;
+
+    protected abstract get name(): string;
+
+    protected abstract generateParseFunctionBody(): BlockTerm;
+
+    private get nodeTypeName() {
+        const firstLetter = this.name[0];
+        const nameTail = this.name.substring(1);
+
+        return firstLetter.toUpperCase() + nameTail;
+    }
+
+    private get parseFunctionName(): string {
+        return `parse${this.kind}_${this.name}`;
+    }
+
+    private generateNodeTypeReference() {
+        return new typescript_ast.TypeReferenceTerm({
+            referredName: this.nodeTypeName,
+        });
+    }
 }
 
 class SymbolRepresentation extends DefinitionRepresentation {
@@ -170,18 +145,18 @@ class SymbolRepresentation extends DefinitionRepresentation {
         return this._symbolDefinition.name;
     }
 
-    buildParseFunctionBody(): BlockTerm {
+    generateParseFunctionBody(): BlockTerm {
         return new BlockTerm({
             innerStatements: [
                 new ConstDefinitionTerm({
                     name: "symbol",
                     body: SymbolRepresentation.parseStringCall,
                 }),
-                SymbolRepresentation.buildIfNullReturnNullStatement({
-                    referredName: "symbol",
+                generateIfNullReturnNullStatement({
+                    comparedReferredName: "symbol",
                 }),
-                SymbolRepresentation.buildReturnReferred({
-                    referredName: "symbol",
+                generateReturnReference({
+                    returnedReferredName: "symbol",
                 }),
             ],
         });
@@ -197,6 +172,23 @@ abstract class RuleRepresentation extends DefinitionRepresentation {
 
     override get name(): string {
         return this.ruleDefinition.name;
+    }
+
+    override generateParseFunctionBody(): BlockTerm {
+        return new BlockTerm({
+            innerStatements: [
+                new ConstDefinitionTerm({
+                    name: "symbol",
+                    body: SymbolRepresentation.parseStringCall,
+                }),
+                generateIfNullReturnNullStatement({
+                    comparedReferredName: "symbol",
+                }),
+                generateReturnReference({
+                    returnedReferredName: "symbol",
+                }),
+            ],
+        });
     }
 }
 
@@ -222,6 +214,12 @@ export class SymbolDefinitionTerm extends DefinitionTerm {
         this.name = name;
         this.pattern = pattern;
     }
+
+    get representation(): DefinitionRepresentation {
+        return new SymbolRepresentation({
+            symbolDefinition: this,
+        });
+    }
 }
 
 export class RuleDefinitionTerm extends DefinitionTerm {
@@ -245,5 +243,9 @@ export class RuleDefinitionTerm extends DefinitionTerm {
         super();
         this.name = name;
         this.body = body;
+    }
+
+    get representation(): DefinitionRepresentation {
+        throw new Error();
     }
 }

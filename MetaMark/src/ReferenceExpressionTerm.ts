@@ -1,8 +1,8 @@
 import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
 import { ReferenceExpressionContext } from "../generated_src/MetamarkParser";
 import { StaticScope } from "./StaticScope";
-import { name } from "ts-loader";
 import { DefinitionTerm } from "./DefinitionTerm";
+import * as typescript_ast from "./typescript_ast";
 
 export class ReferenceExpressionTerm extends ExpressionTerm {
     static equals(
@@ -31,10 +31,7 @@ export class ReferenceExpressionTerm extends ExpressionTerm {
 
     readonly referredName: string;
 
-    constructor(
-        staticScope: StaticScope,
-        referredIdentifier: string,
-    ) {
+    constructor(staticScope: StaticScope, referredIdentifier: string) {
         super();
 
         this._staticScope = staticScope;
@@ -42,10 +39,22 @@ export class ReferenceExpressionTerm extends ExpressionTerm {
     }
 
     get referredDefinition(): DefinitionTerm | null {
-        return this._staticScope.getDefinition(this.referredName)
+        return this._staticScope.getDefinition(this.referredName);
     }
 
     get representation(): ExpressionRepresentation {
-        throw new Error();
+        const referredDefinition = this.referredDefinition;
+
+        if (referredDefinition === null) {
+            throw new Error(
+                "Cannot provide representation for an unresolved reference",
+            );
+        }
+
+        return {
+            generateParseFunctionExpression(): typescript_ast.ExpressionTerm {
+                return referredDefinition.representation.generateParseFunctionReference();
+            },
+        };
     }
 }

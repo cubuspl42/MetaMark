@@ -9,13 +9,13 @@ export class DelegatingExpressionRepresentation extends ExpressionRepresentation
         super();
     }
 
-    override buildParseFunctionExpression(): typescript_ast.ExpressionTerm {
+    override generateParseFunctionExpression(): typescript_ast.ExpressionTerm {
         return new typescript_ast.CallExpressionTerm({
             callee: new typescript_ast.ReferenceExpressionTerm({
                 referredName: `build_${this.buildFunctionName}`,
             }),
             arguments: [
-                this.delegateExpressionTerm.representation.buildParseFunctionExpression(),
+                this.delegateExpressionTerm.representation.generateParseFunctionExpression(),
             ],
         });
     }
