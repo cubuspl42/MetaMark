@@ -6,10 +6,7 @@ import { DefinitionTerm } from "./DefinitionTerm";
 import { TokenNodeGenerator } from "./generation/TokenNodeGenerator";
 
 export class TokenDefinitionTerm extends DefinitionTerm {
-    static equals(
-        a: TokenDefinitionTerm,
-        b: TokenDefinitionTerm,
-    ): boolean;
+    static equals(a: TokenDefinitionTerm, b: TokenDefinitionTerm): boolean;
     static equals(a: unknown, b: unknown): boolean | undefined;
 
     static equals(a: unknown, b: unknown): boolean | undefined {

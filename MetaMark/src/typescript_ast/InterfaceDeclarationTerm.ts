@@ -36,11 +36,11 @@ export class InterfaceDeclarationTerm implements IDeclarationTerm {
         const propertiesString = joinStringsOf(
             this.properties,
             "\n",
-            (property) => property.toPrettyString(),
+            (property) => `${indent}${property.toPrettyString()};`,
         );
 
         return joinStringNl([
-            `${indent}interface ${this.name} {`,
+            `interface ${this.name} {`,
             propertiesString,
             `}`,
         ]);

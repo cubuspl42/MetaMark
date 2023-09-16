@@ -1,6 +1,7 @@
 import { TypeExpressionTerm } from "./TypeExpressionTerm";
 import { BlockTerm } from "./BlockTerm";
 import { IExpressionTerm } from "./ExpressionTerm";
+import { joinStringsOf } from "./utils";
 
 export class FunctionArgumentDeclarationTerm {
     readonly name: string;
@@ -9,6 +10,10 @@ export class FunctionArgumentDeclarationTerm {
     constructor(args: { name: string; type: TypeExpressionTerm }) {
         this.name = args.name;
         this.type = args.type;
+    }
+
+    toPrettyString(): string {
+        return `${this.name}: ${this.type.toPrettyString()}`;
     }
 }
 
@@ -28,9 +33,14 @@ export class ArrowFunctionConstructorTerm implements IExpressionTerm {
     }
 
     toPrettyString(): string {
-        const argumentsString = "";
-        const returnTypeString = "";
-        const bodyString = "";
+        const argumentsString = joinStringsOf(
+            this.arguments,
+            ", ",
+            (argument) => argument.toPrettyString(),
+        );
+
+        const returnTypeString = this.returnType.toPrettyString();
+        const bodyString = this.body.toPrettyString();
 
         return `(${argumentsString}): ${returnTypeString} => ${bodyString}`;
     }

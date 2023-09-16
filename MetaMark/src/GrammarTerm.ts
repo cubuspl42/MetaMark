@@ -12,7 +12,11 @@ export class GrammarTerm {
     static equals(a: unknown, b: unknown): boolean | undefined {
         if (!(a instanceof GrammarTerm)) return undefined;
         if (!(b instanceof GrammarTerm)) return undefined;
-        return arrayEquals(a.definitions, b.definitions, DefinitionTermUtils.equals);
+        return arrayEquals(
+            a.definitions,
+            b.definitions,
+            DefinitionTermUtils.equals,
+        );
     }
 
     static parse(name: string, source: string) {

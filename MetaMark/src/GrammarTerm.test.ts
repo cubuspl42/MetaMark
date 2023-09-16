@@ -18,4 +18,19 @@ describe("GrammarTerm", () => {
             ]),
         );
     });
+
+    test("It generates a TypeScript module", () => {
+        const term = GrammarTerm.parse(
+            "MyLang",
+            `
+%token Asterisk : "*"
+
+%element Emphasis : Asterisk+
+`,
+        );
+
+        const module = term.generateModule();
+
+        const moduleString = module.toPrettyString();
+    });
 });
