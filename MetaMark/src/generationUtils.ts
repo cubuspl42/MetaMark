@@ -1,10 +1,16 @@
 import * as typescript_ast from "./typescript_ast";
-import { BlockTerm, ExpressionTerm, ReturnStatementTerm } from "./typescript_ast";
+import {
+    BlockTerm,
+    ExpressionTerm,
+    ReturnStatementTerm,
+} from "./typescript_ast";
 
-export const nullExpression = typescript_ast.ReferenceExpressionTerm.nullTerm;
+export const nullReference = new typescript_ast.ReferenceExpressionTerm({
+    referredName: "null",
+});
 
 export const returnNullBlock = generateReturnBlock({
-    returnedExpression: nullExpression,
+    returnedExpression: nullReference,
 });
 
 export function generateReturnBlock(args: {
@@ -28,7 +34,7 @@ export function generateIfNullReturnNullStatement(args: {
                 referredName: args.comparedReferredName,
             }),
             operator: "!==",
-            right: nullExpression,
+            right: nullReference,
         }),
         thenBlock: returnNullBlock,
     });
@@ -43,4 +49,3 @@ export function generateReturnReference(args: {
         }),
     });
 }
-

@@ -8,7 +8,7 @@ interface Emphasis {
     type: "Emphasis";
 }
 
-export const parseToken_Asterisk = (charStream: runtime.CharStream): Asterisk => {
+export const parseToken_Asterisk = (charStream: runtime.CharStream): Asterisk | null => {
     const symbol = runtime.parseString(charStream);
 
     if (symbol !== null) {
@@ -18,6 +18,6 @@ export const parseToken_Asterisk = (charStream: runtime.CharStream): Asterisk =>
     return symbol;
 };
 
-export const parseToken_Emphasis = (charStream: runtime.CharStream): Emphasis => {
+export const parseToken_Emphasis = (charStream: runtime.CharStream): Emphasis | null => {
     return parseToken_Asterisk(charStream);
 };
