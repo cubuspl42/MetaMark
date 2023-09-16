@@ -1,4 +1,5 @@
 import { DeclarationTerm } from "./DeclarationTerm";
+import { joinStringsOf } from "./utils";
 
 export class ModuleTerm {
     readonly declarations: ReadonlyArray<DeclarationTerm>;
@@ -10,6 +11,8 @@ export class ModuleTerm {
     }
 
     toPrettyString(): string {
-        return this.declarations.join();
+        return joinStringsOf(this.declarations, "\n\n", (declaration) =>
+            declaration.toPrettyString(),
+        );
     }
 }

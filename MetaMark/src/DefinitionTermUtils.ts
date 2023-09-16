@@ -1,4 +1,7 @@
-import { DefinitionContext, Expression_stringLiteralContext } from "../generated_src/MetamarkParser";
+import {
+    DefinitionContext,
+    Expression_stringLiteralContext,
+} from "../generated_src/MetamarkParser";
 import { MetamarkLexer } from "../generated_src/MetamarkLexer";
 import { StringLiteralTerm } from "./StringLiteralTerm";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
@@ -6,7 +9,6 @@ import { StaticScope } from "./StaticScope";
 import { ElementDefinitionTerm } from "./ElementDefinitionTerm";
 import { TokenDefinitionTerm } from "./TokenDefinitionTerm";
 import { DefinitionTerm } from "./DefinitionTerm";
-
 
 export abstract class DefinitionTermUtils {
     static equals(a: DefinitionTerm, b: DefinitionTerm): boolean;
@@ -44,6 +46,5 @@ export abstract class DefinitionTermUtils {
         }
     }
 
-    private constructor() {
-    }
+    private constructor() {}
 }

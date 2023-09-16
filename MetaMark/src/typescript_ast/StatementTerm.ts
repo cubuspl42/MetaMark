@@ -3,8 +3,9 @@ import { IfStatementTerm } from "./IfStatementTerm";
 import { BlockTerm } from "./BlockTerm";
 import { ReturnStatementTerm } from "./ReturnStatementTerm";
 
-export type StatementTerm =
-    | DeclarationTerm
-    | IfStatementTerm
-    | BlockTerm
-    | ReturnStatementTerm;
+export interface IStatementTerm {
+    toPrettyString(): string;
+}
+
+export type StatementTerm = IStatementTerm &
+    (DeclarationTerm | IfStatementTerm | BlockTerm | ReturnStatementTerm);

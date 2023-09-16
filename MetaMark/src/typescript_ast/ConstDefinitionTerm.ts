@@ -20,7 +20,7 @@ export class ConstDefinitionTerm implements IDeclarationTerm {
     toPrettyString(): string {
         const modifier = this.modifier;
         const modifierPrefix = modifier !== null ? `${modifier} ` : "";
-        const bodyString = indentTailLines(this.body.toPrettyString());
+        const bodyString = this.body.toPrettyString();
 
         return `${modifierPrefix}const ${this.name} = ${bodyString}`;
     }

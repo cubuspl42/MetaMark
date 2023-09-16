@@ -7,10 +7,7 @@ import { DefinitionTerm } from "./DefinitionTerm";
 import { ElementNodeGenerator } from "./generation/ElementNodeGenerator";
 
 export class ElementDefinitionTerm extends DefinitionTerm {
-    static equals(
-        a: ElementDefinitionTerm,
-        b: ElementDefinitionTerm,
-    ): boolean;
+    static equals(a: ElementDefinitionTerm, b: ElementDefinitionTerm): boolean;
     static equals(a: unknown, b: unknown): boolean | undefined;
 
     static equals(a: unknown, b: unknown): boolean | undefined {
@@ -30,13 +27,13 @@ export class ElementDefinitionTerm extends DefinitionTerm {
     }
 
     override get nodeGenerator(): NodeGenerator {
-        throw new ElementNodeGenerator({
+        return new ElementNodeGenerator({
             elementDefinition: this,
         });
     }
 
     override get parseFunctionGenerator(): ParseFunctionGenerator {
-        throw new ElementParseFunctionGenerator({
+        return new ElementParseFunctionGenerator({
             elementDefinition: this,
         });
     }
