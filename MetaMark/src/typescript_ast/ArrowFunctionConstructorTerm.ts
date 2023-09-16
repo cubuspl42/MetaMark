@@ -1,5 +1,6 @@
 import { TypeExpressionTerm } from "./TypeExpressionTerm";
 import { BlockTerm } from "./BlockTerm";
+import { IExpressionTerm } from "./ExpressionTerm";
 
 export class FunctionArgumentDeclarationTerm {
     readonly name: string;
@@ -11,7 +12,7 @@ export class FunctionArgumentDeclarationTerm {
     }
 }
 
-export class ArrowFunctionConstructorTerm {
+export class ArrowFunctionConstructorTerm implements IExpressionTerm {
     readonly arguments: ReadonlyArray<FunctionArgumentDeclarationTerm>;
     readonly returnType: TypeExpressionTerm;
     readonly body: BlockTerm;
@@ -24,5 +25,13 @@ export class ArrowFunctionConstructorTerm {
         this.arguments = args.arguments;
         this.returnType = args.returnType;
         this.body = args.body;
+    }
+
+    toPrettyString(): string {
+        const argumentsString = "";
+        const returnTypeString = "";
+        const bodyString = "";
+
+        return `(${argumentsString}): ${returnTypeString} => ${bodyString}`;
     }
 }

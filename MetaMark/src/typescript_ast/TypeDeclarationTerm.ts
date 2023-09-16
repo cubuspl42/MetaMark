@@ -15,4 +15,8 @@ export class TypeDeclarationTerm implements IDeclarationTerm {
         this.name = args.name;
         this.body = args.body;
     }
+
+    toPrettyString(): string {
+        return "(type declaration)"; // TODO
+    }
 }

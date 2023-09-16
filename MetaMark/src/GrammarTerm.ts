@@ -2,6 +2,7 @@ import { arrayEquals, parseAsContext } from "./utils";
 import { Grammar_Context } from "../generated_src/MetamarkParser";
 import { DefinitionTerm } from "./DefinitionTerm";
 import { BlockStaticScope, LoopedStaticScope } from "./StaticScope";
+import { ModuleTerm } from "./typescript_ast";
 
 export class GrammarTerm {
     static equals(a: GrammarTerm, b: GrammarTerm): boolean;
@@ -42,13 +43,16 @@ export class GrammarTerm {
         this.definitions = definitions;
     }
 
-    generate(): string {
-        return `
-export class ${this.name}Parser {
-    parse(source: string): string {
-        return "${this.name}";
-    }
-}
-`.trim();
+    generateModule(): ModuleTerm {
+        return new ModuleTerm({
+            declarations: [
+                ...this.definitions.map((definition) =>
+                    definition.nodeGenerator.generateInterfaceDeclaration(),
+                ),
+                ...this.definitions.map((definition) =>
+                    definition.parseFunctionGenerator.generateParseFunctionDefinition(),
+                ),
+            ],
+        });
     }
 }

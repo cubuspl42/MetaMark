@@ -8,4 +8,8 @@ export class PropertySignatureTerm {
         this.name = args.name;
         this.type = args.type;
     }
+
+    toPrettyString(): string {
+        return `${this.name}: ${this.type.toPrettyString()}`;
+    }
 }

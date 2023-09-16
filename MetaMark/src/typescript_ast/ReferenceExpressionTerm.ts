@@ -1,4 +1,6 @@
-export class ReferenceExpressionTerm {
+import { IExpressionTerm } from "./ExpressionTerm";
+
+export class ReferenceExpressionTerm implements IExpressionTerm {
     static nullTerm = new ReferenceExpressionTerm({
         referredName: "null",
     });
@@ -7,5 +9,9 @@ export class ReferenceExpressionTerm {
 
     constructor(args: { readonly referredName: string }) {
         this.referredName = args.referredName;
+    }
+
+    toPrettyString(): string {
+        return this.referredName;
     }
 }
