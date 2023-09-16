@@ -1,11 +1,9 @@
 import { IExpressionTerm } from "./ExpressionTerm";
 import { ITypeExpressionTerm } from "./TypeExpressionTerm";
 
-export class ReferenceExpressionTerm implements IExpressionTerm, ITypeExpressionTerm {
-    static nullTerm = new ReferenceExpressionTerm({
-        referredName: "null",
-    });
-
+export class ReferenceExpressionTerm
+    implements IExpressionTerm, ITypeExpressionTerm
+{
     readonly referredName: string;
 
     constructor(args: { readonly referredName: string }) {

@@ -21,9 +21,10 @@ export class ElementParseFunctionGenerator extends ParseFunctionGenerator {
         return new BlockTerm({
             innerStatements: [
                 new ReturnStatementTerm({
-                    returnedExpression: ParseFunctionGenerator.generateParseCall({
-                        callee: body.generateParseFunctionExpression(),
-                    }),
+                    returnedExpression:
+                        ParseFunctionGenerator.generateParseCall({
+                            callee: body.generateParseFunctionExpression(),
+                        }),
                 }),
             ],
         });

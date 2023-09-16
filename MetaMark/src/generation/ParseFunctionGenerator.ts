@@ -1,17 +1,24 @@
 import * as typescript_ast from "../typescript_ast";
-import { ArrowFunctionConstructorTerm, BlockTerm, ExpressionTerm, ReferenceExpressionTerm } from "../typescript_ast";
+import {
+    ArrowFunctionConstructorTerm,
+    BlockTerm,
+    ExpressionTerm,
+    ReferenceExpressionTerm,
+    UnionTypeTerm,
+} from "../typescript_ast";
 import { FunctionArgumentDeclarationTerm } from "../typescript_ast/ArrowFunctionConstructorTerm";
 import { DefinitionTerm } from "../DefinitionTerm";
 import { NodeGenerator } from "./NodeGenerator";
-
 import { charStreamTypeReference, parseStringReference } from "./runtime";
+import { nullReference } from "../generationUtils";
 
 export abstract class ParseFunctionGenerator {
     private static readonly charStreamArgumentName = "charStream";
 
-    private static readonly charStreamArgumentReference = new typescript_ast.ReferenceExpressionTerm({
-        referredName: this.charStreamArgumentName,
-    });
+    private static readonly charStreamArgumentReference =
+        new typescript_ast.ReferenceExpressionTerm({
+            referredName: this.charStreamArgumentName,
+        });
 
     static generateParseCall(args: { readonly callee: ExpressionTerm }) {
         return new typescript_ast.CallExpressionTerm({
@@ -24,10 +31,11 @@ export abstract class ParseFunctionGenerator {
         });
     }
 
-    static parseStringCall = this.generateParseCall({ callee: parseStringReference });
+    static parseStringCall = this.generateParseCall({
+        callee: parseStringReference,
+    });
 
-    protected constructor(private kind: string) {
-    }
+    protected constructor(private kind: string) {}
 
     protected abstract get definition(): DefinitionTerm;
 
@@ -48,7 +56,12 @@ export abstract class ParseFunctionGenerator {
                         type: charStreamTypeReference,
                     }),
                 ],
-                returnType: this.nodeGenerator.generateTypeReference(),
+                returnType: new UnionTypeTerm({
+                    types: [
+                        this.nodeGenerator.generateTypeReference(),
+                        nullReference,
+                    ],
+                }),
                 body: this.generateParseFunctionBody(),
             }),
         });
