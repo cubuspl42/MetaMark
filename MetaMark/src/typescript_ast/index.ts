@@ -1,4 +1,3 @@
-import { ArrayTypeTerm } from "./ArrayTypeTerm";
 import { ArrowFunctionConstructorTerm } from "./ArrowFunctionConstructorTerm";
 import { BinaryExpressionTerm } from "./BinaryExpressionTerm";
 import { BlockTerm } from "./BlockTerm";
@@ -8,10 +7,11 @@ import { DeclarationTerm } from "./DeclarationTerm";
 import { ExpressionTerm } from "./ExpressionTerm";
 import { IfStatementTerm } from "./IfStatementTerm";
 import { ImportTerm } from "./ImportTerm";
-import { InterfaceDeclarationTerm } from "./InterfaceDeclarationTerm";
+import {
+    InterfaceDeclarationTerm,
+    PropertySignatureTerm,
+} from "./InterfaceDeclarationTerm";
 import { ModuleTerm } from "./ModuleTerm";
-import { ParameterTerm } from "./ParameterTerm";
-import { PropertySignatureTerm } from "./PropertySignatureTerm";
 import { ReferenceExpressionTerm } from "./ReferenceExpressionTerm";
 import { ReturnStatementTerm } from "./ReturnStatementTerm";
 import { StatementTerm } from "./StatementTerm";
@@ -22,7 +22,6 @@ import { TypeReferenceTerm } from "./TypeReferenceTerm";
 import { UnionTypeTerm } from "./UnionTypeTerm";
 
 export {
-    ArrayTypeTerm,
     ArrowFunctionConstructorTerm,
     BinaryExpressionTerm,
     BlockTerm,
@@ -34,7 +33,6 @@ export {
     ImportTerm,
     InterfaceDeclarationTerm,
     ModuleTerm,
-    ParameterTerm,
     PropertySignatureTerm,
     ReferenceExpressionTerm,
     ReturnStatementTerm,
