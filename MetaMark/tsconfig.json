@@ -23,7 +23,8 @@
     "useUnknownInCatchVariables": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true
+    "noImplicitOverride": true,
+    "sourceMap": true
   },
   "include": [
     "./src/**/*.ts"

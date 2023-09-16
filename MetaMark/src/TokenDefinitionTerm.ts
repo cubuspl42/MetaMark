@@ -6,13 +6,13 @@ import { DefinitionTerm } from "./DefinitionTerm";
 import { TokenNodeGenerator } from "./generation/TokenNodeGenerator";
 
 export class TokenDefinitionTerm extends DefinitionTerm {
-    static override equals(
+    static equals(
         a: TokenDefinitionTerm,
         b: TokenDefinitionTerm,
     ): boolean;
-    static override equals(a: unknown, b: unknown): boolean | undefined;
+    static equals(a: unknown, b: unknown): boolean | undefined;
 
-    static override equals(a: unknown, b: unknown): boolean | undefined {
+    static equals(a: unknown, b: unknown): boolean | undefined {
         if (!(a instanceof TokenDefinitionTerm)) return undefined;
         if (!(b instanceof TokenDefinitionTerm)) return undefined;
         if (a.name !== b.name) return false;

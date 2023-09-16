@@ -7,13 +7,13 @@ import { DefinitionTerm } from "./DefinitionTerm";
 import { ElementNodeGenerator } from "./generation/ElementNodeGenerator";
 
 export class ElementDefinitionTerm extends DefinitionTerm {
-    static override equals(
+    static equals(
         a: ElementDefinitionTerm,
         b: ElementDefinitionTerm,
     ): boolean;
-    static override equals(a: unknown, b: unknown): boolean | undefined;
+    static equals(a: unknown, b: unknown): boolean | undefined;
 
-    static override equals(a: unknown, b: unknown): boolean | undefined {
+    static equals(a: unknown, b: unknown): boolean | undefined {
         if (!(a instanceof ElementDefinitionTerm)) return undefined;
         if (!(b instanceof ElementDefinitionTerm)) return undefined;
         if (a.name !== b.name) return false;
