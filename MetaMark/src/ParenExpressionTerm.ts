@@ -1,7 +1,8 @@
-import { ExpressionRepresentation, ExpressionTerm } from "./ExpressionTerm";
+import { ExpressionTerm } from "./ExpressionTerm";
 import { ParenExpressionContext } from "../generated_src/MetamarkParser";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
 import { StaticScope } from "./StaticScope";
+import * as typescript_ast from "./typescript_ast";
 
 export class ParenExpressionTerm extends ExpressionTerm {
     static equals(a: ParenExpressionTerm, b: ParenExpressionTerm): boolean;
@@ -29,7 +30,7 @@ export class ParenExpressionTerm extends ExpressionTerm {
         this.innerExpression = innerExpression;
     }
 
-    override get representation(): ExpressionRepresentation {
-        return this.innerExpression.representation;
+    override generateParseFunctionExpression(): typescript_ast.ExpressionTerm {
+        return this.innerExpression.generateParseFunctionExpression();
     }
 }
