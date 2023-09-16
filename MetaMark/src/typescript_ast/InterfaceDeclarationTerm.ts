@@ -7,7 +7,7 @@ export class InterfaceDeclarationTerm implements IDeclarationTerm {
     readonly properties: ReadonlyArray<PropertySignatureTerm>;
 
     constructor(args: {
-        modifier?: DeclarationModifier
+        modifier?: DeclarationModifier;
         name: string;
         properties: ReadonlyArray<PropertySignatureTerm>;
     }) {

@@ -1,7 +1,7 @@
 import { GrammarTerm } from "./GrammarTerm";
 import { describe, test, expect } from "@jest/globals";
-import { TokenDefinitionTerm } from "./DefinitionTerm";
 import { StringLiteralTerm } from "./StringLiteralTerm";
+import { TokenDefinitionTerm } from "./TokenDefinitionTerm";
 
 describe("GrammarTerm", () => {
     test("It parses", () => {
