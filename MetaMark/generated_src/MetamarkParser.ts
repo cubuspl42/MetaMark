@@ -225,9 +225,9 @@ export class MetamarkParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			this._ctx._stop = this._input.tryLT(-1);
-			this.state = 36;
+			this.state = 42;
 			this._errHandler.sync(this);
-			_alt = this.interpreter.adaptivePredict(this._input, 3, this._ctx);
+			_alt = this.interpreter.adaptivePredict(this._input, 4, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					if (this._parseListeners != null) {
@@ -235,17 +235,17 @@ export class MetamarkParser extends Parser {
 					}
 					_prevctx = _localctx;
 					{
-					this.state = 34;
+					this.state = 40;
 					this._errHandler.sync(this);
-					switch ( this.interpreter.adaptivePredict(this._input, 2, this._ctx) ) {
+					switch ( this.interpreter.adaptivePredict(this._input, 3, this._ctx) ) {
 					case 1:
 						{
 						_localctx = new Expression_matchZeroOrMoreExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						(_localctx as Expression_matchZeroOrMoreExpressionContext)._repeatedExpression = _prevctx;
 						this.pushNewRecursionContext(_localctx, _startState, MetamarkParser.RULE_expression);
 						this.state = 28;
-						if (!(this.precpred(this._ctx, 5))) {
-							throw this.createFailedPredicateException("this.precpred(this._ctx, 5)");
+						if (!(this.precpred(this._ctx, 6))) {
+							throw this.createFailedPredicateException("this.precpred(this._ctx, 6)");
 						}
 						this.state = 29;
 						this.match(MetamarkParser.Asterisk);
@@ -257,8 +257,8 @@ export class MetamarkParser extends Parser {
 						(_localctx as Expression_matchOneOrMoreExpressionContext)._repeatedExpression = _prevctx;
 						this.pushNewRecursionContext(_localctx, _startState, MetamarkParser.RULE_expression);
 						this.state = 30;
-						if (!(this.precpred(this._ctx, 4))) {
-							throw this.createFailedPredicateException("this.precpred(this._ctx, 4)");
+						if (!(this.precpred(this._ctx, 5))) {
+							throw this.createFailedPredicateException("this.precpred(this._ctx, 5)");
 						}
 						this.state = 31;
 						this.match(MetamarkParser.Plus);
@@ -270,19 +270,49 @@ export class MetamarkParser extends Parser {
 						(_localctx as Expression_matchZeroOrOneExpressionContext)._optionalExpression = _prevctx;
 						this.pushNewRecursionContext(_localctx, _startState, MetamarkParser.RULE_expression);
 						this.state = 32;
-						if (!(this.precpred(this._ctx, 3))) {
-							throw this.createFailedPredicateException("this.precpred(this._ctx, 3)");
+						if (!(this.precpred(this._ctx, 4))) {
+							throw this.createFailedPredicateException("this.precpred(this._ctx, 4)");
 						}
 						this.state = 33;
 						this.match(MetamarkParser.QuestionMark);
 						}
 						break;
+					case 4:
+						{
+						_localctx = new Expression_concatExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						this.pushNewRecursionContext(_localctx, _startState, MetamarkParser.RULE_expression);
+						this.state = 34;
+						if (!(this.precpred(this._ctx, 2))) {
+							throw this.createFailedPredicateException("this.precpred(this._ctx, 2)");
+						}
+						this.state = 36;
+						this._errHandler.sync(this);
+						_alt = 1;
+						do {
+							switch (_alt) {
+							case 1:
+								{
+								{
+								this.state = 35;
+								this.expression(0);
+								}
+								}
+								break;
+							default:
+								throw new NoViableAltException(this);
+							}
+							this.state = 38;
+							this._errHandler.sync(this);
+							_alt = this.interpreter.adaptivePredict(this._input, 2, this._ctx);
+						} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
+						}
+						break;
 					}
 					}
 				}
-				this.state = 38;
+				this.state = 44;
 				this._errHandler.sync(this);
-				_alt = this.interpreter.adaptivePredict(this._input, 3, this._ctx);
+				_alt = this.interpreter.adaptivePredict(this._input, 4, this._ctx);
 			}
 			}
 		}
@@ -307,11 +337,11 @@ export class MetamarkParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 39;
+			this.state = 45;
 			this.match(MetamarkParser.ParenLeft);
-			this.state = 40;
+			this.state = 46;
 			_localctx._innerExpression = this.expression(0);
-			this.state = 41;
+			this.state = 47;
 			this.match(MetamarkParser.ParenRight);
 			}
 		}
@@ -336,7 +366,7 @@ export class MetamarkParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 43;
+			this.state = 49;
 			_localctx._referredIdentifier = this.match(MetamarkParser.Identifier);
 			}
 		}
@@ -361,7 +391,7 @@ export class MetamarkParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 45;
+			this.state = 51;
 			this.match(MetamarkParser.StringLiteral);
 			}
 		}
@@ -390,38 +420,43 @@ export class MetamarkParser extends Parser {
 	private expression_sempred(_localctx: ExpressionContext, predIndex: number): boolean {
 		switch (predIndex) {
 		case 0:
-			return this.precpred(this._ctx, 5);
+			return this.precpred(this._ctx, 6);
 		case 1:
-			return this.precpred(this._ctx, 4);
+			return this.precpred(this._ctx, 5);
 		case 2:
-			return this.precpred(this._ctx, 3);
+			return this.precpred(this._ctx, 4);
+		case 3:
+			return this.precpred(this._ctx, 2);
 		}
 		return true;
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x122\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x128\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
 		"\t\x07\x03\x02\x06\x02\x10\n\x02\r\x02\x0E\x02\x11\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x04\x03\x04\x03\x04\x03\x04\x05\x04\x1D\n\x04" +
-		"\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x07\x04%\n\x04\f\x04" +
-		"\x0E\x04(\v\x04\x03\x05\x03\x05\x03\x05\x03\x05\x03\x06\x03\x06\x03\x07" +
-		"\x03\x07\x03\x07\x02\x02\x03\x06\b\x02\x02\x04\x02\x06\x02\b\x02\n\x02" +
-		"\f\x02\x02\x03\x03\x02\x03\x04\x021\x02\x0F\x03\x02\x02\x02\x04\x13\x03" +
-		"\x02\x02\x02\x06\x1C\x03\x02\x02\x02\b)\x03\x02\x02\x02\n-\x03\x02\x02" +
-		"\x02\f/\x03\x02\x02\x02\x0E\x10\x05\x04\x03\x02\x0F\x0E\x03\x02\x02\x02" +
-		"\x10\x11\x03\x02\x02\x02\x11\x0F\x03\x02\x02\x02\x11\x12\x03\x02\x02\x02" +
-		"\x12\x03\x03\x02\x02\x02\x13\x14\t\x02\x02\x02\x14\x15\x07\x05\x02\x02" +
-		"\x15\x16\x07\x07\x02\x02\x16\x17\x05\x06\x04\x02\x17\x05\x03\x02\x02\x02" +
-		"\x18\x19\b\x04\x01\x02\x19\x1D\x05\b\x05\x02\x1A\x1D\x05\n\x06\x02\x1B" +
-		"\x1D\x05\f\x07\x02\x1C\x18\x03\x02\x02\x02\x1C\x1A\x03\x02\x02\x02\x1C" +
-		"\x1B\x03\x02\x02\x02\x1D&\x03\x02\x02\x02\x1E\x1F\f\x07\x02\x02\x1F%\x07" +
-		"\t\x02\x02 !\f\x06\x02\x02!%\x07\n\x02\x02\"#\f\x05\x02\x02#%\x07\v\x02" +
-		"\x02$\x1E\x03\x02\x02\x02$ \x03\x02\x02\x02$\"\x03\x02\x02\x02%(\x03\x02" +
-		"\x02\x02&$\x03\x02\x02\x02&\'\x03\x02\x02\x02\'\x07\x03\x02\x02\x02(&" +
-		"\x03\x02\x02\x02)*\x07\r\x02\x02*+\x05\x06\x04\x02+,\x07\x0E\x02\x02," +
-		"\t\x03\x02\x02\x02-.\x07\x05\x02\x02.\v\x03\x02\x02\x02/0\x07\x11\x02" +
-		"\x020\r\x03\x02\x02\x02\x06\x11\x1C$&";
+		"\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x06\x04" +
+		"\'\n\x04\r\x04\x0E\x04(\x07\x04+\n\x04\f\x04\x0E\x04.\v\x04\x03\x05\x03" +
+		"\x05\x03\x05\x03\x05\x03\x06\x03\x06\x03\x07\x03\x07\x03\x07\x02\x02\x03" +
+		"\x06\b\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02\x02\x03\x03\x02\x03\x04" +
+		"\x029\x02\x0F\x03\x02\x02\x02\x04\x13\x03\x02\x02\x02\x06\x1C\x03\x02" +
+		"\x02\x02\b/\x03\x02\x02\x02\n3\x03\x02\x02\x02\f5\x03\x02\x02\x02\x0E" +
+		"\x10\x05\x04\x03\x02\x0F\x0E\x03\x02\x02\x02\x10\x11\x03\x02\x02\x02\x11" +
+		"\x0F\x03\x02\x02\x02\x11\x12\x03\x02\x02\x02\x12\x03\x03\x02\x02\x02\x13" +
+		"\x14\t\x02\x02\x02\x14\x15\x07\x05\x02\x02\x15\x16\x07\x07\x02\x02\x16" +
+		"\x17\x05\x06\x04\x02\x17\x05\x03\x02\x02\x02\x18\x19\b\x04\x01\x02\x19" +
+		"\x1D\x05\b\x05\x02\x1A\x1D\x05\n\x06\x02\x1B\x1D\x05\f\x07\x02\x1C\x18" +
+		"\x03\x02\x02\x02\x1C\x1A\x03\x02\x02\x02\x1C\x1B\x03\x02\x02\x02\x1D," +
+		"\x03\x02\x02\x02\x1E\x1F\f\b\x02\x02\x1F+\x07\t\x02\x02 !\f\x07\x02\x02" +
+		"!+\x07\n\x02\x02\"#\f\x06\x02\x02#+\x07\v\x02\x02$&\f\x04\x02\x02%\'\x05" +
+		"\x06\x04\x02&%\x03\x02\x02\x02\'(\x03\x02\x02\x02(&\x03\x02\x02\x02()" +
+		"\x03\x02\x02\x02)+\x03\x02\x02\x02*\x1E\x03\x02\x02\x02* \x03\x02\x02" +
+		"\x02*\"\x03\x02\x02\x02*$\x03\x02\x02\x02+.\x03\x02\x02\x02,*\x03\x02" +
+		"\x02\x02,-\x03\x02\x02\x02-\x07\x03\x02\x02\x02.,\x03\x02\x02\x02/0\x07" +
+		"\r\x02\x0201\x05\x06\x04\x0212\x07\x0E\x02\x022\t\x03\x02\x02\x0234\x07" +
+		"\x05\x02\x024\v\x03\x02\x02\x0256\x07\x11\x02\x026\r\x03\x02\x02\x02\x07" +
+		"\x11\x1C(*,";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!MetamarkParser.__ATN) {
@@ -582,6 +617,29 @@ export class Expression_referenceExpressionContext extends ExpressionContext {
 	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
 		if (visitor.visitExpression_referenceExpression) {
 			return visitor.visitExpression_referenceExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+export class Expression_concatExpressionContext extends ExpressionContext {
+	public expression(): ExpressionContext[];
+	public expression(i: number): ExpressionContext;
+	public expression(i?: number): ExpressionContext | ExpressionContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(ExpressionContext);
+		} else {
+			return this.getRuleContext(i, ExpressionContext);
+		}
+	}
+	constructor(ctx: ExpressionContext) {
+		super(ctx.parent, ctx.invokingState);
+		this.copyFrom(ctx);
+	}
+	// @Override
+	public override accept<Result>(visitor: MetamarkParserVisitor<Result>): Result {
+		if (visitor.visitExpression_concatExpression) {
+			return visitor.visitExpression_concatExpression(this);
 		} else {
 			return visitor.visitChildren(this);
 		}

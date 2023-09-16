@@ -19,5 +19,7 @@ export const parseToken_Asterisk = (charStream: runtime.CharStream): Asterisk | 
 };
 
 export const parseToken_Emphasis = (charStream: runtime.CharStream): Emphasis | null => {
-    return parseToken_Asterisk(charStream);
+    return {
+        type: "Emphasis",
+    }
 };

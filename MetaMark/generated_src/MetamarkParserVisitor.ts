@@ -8,6 +8,7 @@ import { Expression_matchZeroOrMoreExpressionContext } from "./MetamarkParser";
 import { Expression_matchOneOrMoreExpressionContext } from "./MetamarkParser";
 import { Expression_matchZeroOrOneExpressionContext } from "./MetamarkParser";
 import { Expression_referenceExpressionContext } from "./MetamarkParser";
+import { Expression_concatExpressionContext } from "./MetamarkParser";
 import { Expression_stringLiteralContext } from "./MetamarkParser";
 import { Grammar_Context } from "./MetamarkParser";
 import { DefinitionContext } from "./MetamarkParser";
@@ -60,6 +61,13 @@ export interface MetamarkParserVisitor<Result> extends ParseTreeVisitor<Result> 
 	 * @return the visitor result
 	 */
 	visitExpression_referenceExpression?: (ctx: Expression_referenceExpressionContext) => Result;
+	/**
+	 * Visit a parse tree produced by the `expression_concatExpression`
+	 * labeled alternative in `MetamarkParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitExpression_concatExpression?: (ctx: Expression_concatExpressionContext) => Result;
 	/**
 	 * Visit a parse tree produced by the `expression_stringLiteral`
 	 * labeled alternative in `MetamarkParser.expression`.

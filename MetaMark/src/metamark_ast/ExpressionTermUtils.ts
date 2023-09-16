@@ -5,6 +5,7 @@ import { MatchOneOrMoreExpressionTerm } from "./MatchOneOrMoreExpressionTerm";
 import { MatchZeroOrOneExpressionTerm } from "./MatchZeroOrOneExpressionTerm";
 import { ExpressionTerm } from "./ExpressionTerm";
 import {
+    Expression_concatExpressionContext,
     Expression_matchOneOrMoreExpressionContext,
     Expression_matchZeroOrMoreExpressionContext,
     Expression_matchZeroOrOneExpressionContext,
@@ -13,6 +14,7 @@ import {
     ExpressionContext,
 } from "../../generated_src/MetamarkParser";
 import { StaticScope } from "./StaticScope";
+import { ConcatExpressionTerm } from "./ConcatExpressionTerm";
 
 export class ExpressionTermUtils {
     static equals(a: ExpressionTerm, b: ExpressionTerm): boolean;
@@ -49,7 +51,9 @@ export class ExpressionTermUtils {
             return MatchOneOrMoreExpressionTerm.build(staticScope, ctx);
         } else if (ctx instanceof Expression_matchZeroOrOneExpressionContext) {
             return MatchZeroOrOneExpressionTerm.build(staticScope, ctx);
-        } else {
+        } else if (ctx instanceof Expression_concatExpressionContext) {
+            return ConcatExpressionTerm.build(staticScope, ctx);
+        }else {
             throw new Error(`Unsupported expression context: ${ctx}`);
         }
     }
