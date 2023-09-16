@@ -3,6 +3,7 @@ import minimist from "minimist";
 import * as fs from "fs";
 import { GrammarTerm } from "./GrammarTerm";
 import * as path from "path";
+import runtimeSourceString from "../runtime/runtime.ts.txt";
 
 const outputFileName = "MarkParser.ts";
 
@@ -33,6 +34,12 @@ function main() {
     fs.writeFileSync(
         path.join(outputPath, outputFileName),
         moduleString,
+        "utf-8",
+    );
+
+    fs.writeFileSync(
+        path.join(outputPath, "runtime.ts"),
+        runtimeSourceString,
         "utf-8",
     );
 }

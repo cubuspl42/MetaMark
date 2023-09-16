@@ -1,10 +1,5 @@
 import * as typescript_ast from "./typescript_ast";
-import {
-    BlockTerm,
-    ExpressionTerm,
-    ReferenceExpressionTerm,
-    ReturnStatementTerm,
-} from "./typescript_ast";
+import { BlockTerm, ExpressionTerm, ReturnStatementTerm } from "./typescript_ast";
 
 export const nullExpression = typescript_ast.ReferenceExpressionTerm.nullTerm;
 
@@ -49,13 +44,3 @@ export function generateReturnReference(args: {
     });
 }
 
-export function generateParseCall(args: { readonly callee: ExpressionTerm }) {
-    return new typescript_ast.CallExpressionTerm({
-        callee: args.callee,
-        arguments: [
-            new ReferenceExpressionTerm({
-                referredName: "charStream",
-            }),
-        ],
-    });
-}

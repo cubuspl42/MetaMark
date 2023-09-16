@@ -6,7 +6,7 @@ import { ConstDefinitionTerm } from "./ConstDefinitionTerm";
 import { DeclarationTerm } from "./DeclarationTerm";
 import { ExpressionTerm } from "./ExpressionTerm";
 import { IfStatementTerm } from "./IfStatementTerm";
-import { ImportTerm } from "./ImportTerm";
+import { ImportAllTerm } from "./ImportTerm";
 import {
     InterfaceDeclarationTerm,
     PropertySignatureTerm,
@@ -30,7 +30,7 @@ export {
     DeclarationTerm,
     ExpressionTerm,
     IfStatementTerm,
-    ImportTerm,
+    ImportAllTerm,
     InterfaceDeclarationTerm,
     ModuleTerm,
     PropertySignatureTerm,
