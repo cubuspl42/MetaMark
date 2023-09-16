@@ -22,6 +22,6 @@ export class ConstDefinitionTerm implements IDeclarationTerm {
         const modifierPrefix = modifier !== null ? `${modifier} ` : "";
         const bodyString = this.body.toPrettyString();
 
-        return `${modifierPrefix}const ${this.name} = ${bodyString}`;
+        return `${modifierPrefix}const ${this.name} = ${bodyString};`;
     }
 }
