@@ -2,6 +2,7 @@ import * as typescript_ast from "./typescript_ast";
 import {
     BlockTerm,
     ExpressionTerm,
+    ReferenceExpressionTerm,
     ReturnStatementTerm,
 } from "./typescript_ast";
 
@@ -45,5 +46,16 @@ export function generateReturnReference(args: {
         returnedExpression: new typescript_ast.ReferenceExpressionTerm({
             referredName: args.returnedReferredName,
         }),
+    });
+}
+
+export function generateParseCall(args: { readonly callee: ExpressionTerm }) {
+    return new typescript_ast.CallExpressionTerm({
+        callee: args.callee,
+        arguments: [
+            new ReferenceExpressionTerm({
+                referredName: "charStream",
+            }),
+        ],
     });
 }

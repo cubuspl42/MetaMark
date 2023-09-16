@@ -8,6 +8,6 @@ export class ReturnStatementTerm implements IStatementTerm {
     }
 
     toPrettyString(): string {
-        return `return ${this.returnedExpression.toPrettyString()}`;
+        return `return ${this.returnedExpression.toPrettyString()};`;
     }
 }

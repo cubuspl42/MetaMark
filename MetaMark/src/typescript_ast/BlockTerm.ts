@@ -14,7 +14,7 @@ export class BlockTerm implements IStatementTerm {
     toPrettyString(): string {
         const innerStatementsString = joinStrings(
             this.innerStatements.map(
-                (statement) => `${indent}${statement.toPrettyString()};`,
+                (statement) => `${indent}${statement.toPrettyString()}`,
             ),
             "\n\n",
         );
