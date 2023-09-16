@@ -1,6 +1,6 @@
 import { GrammarTerm } from "./GrammarTerm";
 import { describe, test, expect } from "@jest/globals";
-import { SymbolDefinitionTerm } from "./DefinitionTerm";
+import { TokenDefinitionTerm } from "./DefinitionTerm";
 import { StringLiteralTerm } from "./StringLiteralTerm";
 
 describe("GrammarTerm", () => {
@@ -8,13 +8,13 @@ describe("GrammarTerm", () => {
         const term = GrammarTerm.parse(
             "MyLang",
             `
-%symbol Ex : "x"
+%token Ex : "x"
 `,
         );
 
         expect(term).toEqual(
             new GrammarTerm("MyLang", [
-                new SymbolDefinitionTerm("Ex", new StringLiteralTerm("x")),
+                new TokenDefinitionTerm("Ex", new StringLiteralTerm("x")),
             ]),
         );
     });

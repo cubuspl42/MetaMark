@@ -1,7 +1,7 @@
 lexer grammar MetamarkLexer;
 
-RuleKeyword : '%rule' ;
-SymbolKeyword : '%symbol' ;
+TokenKeyword : '%token' ;
+ElementKeyworc : '%element' ;
 
 Identifier : [a-zA-Z] [a-zA-Z0-9]* ;
 

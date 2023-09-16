@@ -53,7 +53,7 @@ export class ReferenceExpressionTerm extends ExpressionTerm {
 
         return {
             generateParseFunctionExpression(): typescript_ast.ExpressionTerm {
-                return referredDefinition.representation.generateParseFunctionReference();
+                return referredDefinition.ruleRepresentation.generateParseFunctionReference();
             },
         };
     }

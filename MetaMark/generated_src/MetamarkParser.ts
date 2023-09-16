@@ -27,8 +27,8 @@ import { MetamarkParserVisitor } from "./MetamarkParserVisitor";
 
 
 export class MetamarkParser extends Parser {
-	public static readonly RuleKeyword = 1;
-	public static readonly SymbolKeyword = 2;
+	public static readonly TokenKeyword = 1;
+	public static readonly ElementKeyworc = 2;
 	public static readonly Identifier = 3;
 	public static readonly Dash = 4;
 	public static readonly Colon = 5;
@@ -56,11 +56,11 @@ export class MetamarkParser extends Parser {
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
-		undefined, "'%rule'", "'%symbol'", undefined, "'^'", "':'", "'$'", "'*'", 
+		undefined, "'%token'", "'%element'", undefined, "'^'", "':'", "'$'", "'*'", 
 		"'+'", "'?'", "'+='", "'('", "')'", "'{'", "'}'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
-		undefined, "RuleKeyword", "SymbolKeyword", "Identifier", "Dash", "Colon", 
+		undefined, "TokenKeyword", "ElementKeyworc", "Identifier", "Dash", "Colon", 
 		"Dollar", "Asterisk", "Plus", "QuestionMark", "PlusEquals", "ParenLeft", 
 		"ParenRight", "BraceLeft", "BraceRight", "StringLiteral", "Whitespace",
 	];
@@ -111,7 +111,7 @@ export class MetamarkParser extends Parser {
 				this.state = 15;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
-			} while (_la === MetamarkParser.RuleKeyword || _la === MetamarkParser.SymbolKeyword);
+			} while (_la === MetamarkParser.TokenKeyword || _la === MetamarkParser.ElementKeyworc);
 			}
 		}
 		catch (re) {
@@ -139,7 +139,7 @@ export class MetamarkParser extends Parser {
 			this.state = 17;
 			_localctx._kind = this._input.LT(1);
 			_la = this._input.LA(1);
-			if (!(_la === MetamarkParser.RuleKeyword || _la === MetamarkParser.SymbolKeyword)) {
+			if (!(_la === MetamarkParser.TokenKeyword || _la === MetamarkParser.ElementKeyworc)) {
 				_localctx._kind = this._errHandler.recoverInline(this);
 			} else {
 				if (this._input.LA(1) === Token.EOF) {
@@ -468,8 +468,8 @@ export class DefinitionContext extends ParserRuleContext {
 	public expression(): ExpressionContext {
 		return this.getRuleContext(0, ExpressionContext);
 	}
-	public SymbolKeyword(): TerminalNode | undefined { return this.tryGetToken(MetamarkParser.SymbolKeyword, 0); }
-	public RuleKeyword(): TerminalNode | undefined { return this.tryGetToken(MetamarkParser.RuleKeyword, 0); }
+	public TokenKeyword(): TerminalNode | undefined { return this.tryGetToken(MetamarkParser.TokenKeyword, 0); }
+	public ElementKeyworc(): TerminalNode | undefined { return this.tryGetToken(MetamarkParser.ElementKeyworc, 0); }
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
