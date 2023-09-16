@@ -26,9 +26,13 @@ function main() {
 
     const grammar = GrammarTerm.parse(grammarBaseName, grammarSource);
 
+    const module = grammar.generateModule();
+
+    const moduleString = module.toPrettyString();
+
     fs.writeFileSync(
         path.join(outputPath, outputFileName),
-        grammar.generate(),
+        moduleString,
         "utf-8",
     );
 }

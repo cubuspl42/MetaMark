@@ -8,4 +8,8 @@ export class ModuleTerm {
     }) {
         this.declarations = args.declarations;
     }
+
+    toPrettyString(): string {
+        return this.declarations.join();
+    }
 }
