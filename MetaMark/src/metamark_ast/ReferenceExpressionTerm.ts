@@ -1,8 +1,8 @@
 import { ExpressionTerm } from "./ExpressionTerm";
-import { ReferenceExpressionContext } from "../generated_src/MetamarkParser";
+import { ReferenceExpressionContext } from "../../generated_src/MetamarkParser";
 import { StaticScope } from "./StaticScope";
 import { DefinitionTerm } from "./DefinitionTerm";
-import * as typescript_ast from "./typescript_ast";
+import * as typescript_ast from "../typescript_ast";
 
 export class ReferenceExpressionTerm extends ExpressionTerm {
     static equals(

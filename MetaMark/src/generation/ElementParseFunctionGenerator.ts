@@ -1,7 +1,7 @@
 import { ParseFunctionGenerator } from "./ParseFunctionGenerator";
 import { BlockTerm, ReturnStatementTerm } from "../typescript_ast";
-import { DefinitionTerm } from "../DefinitionTerm";
-import { ElementDefinitionTerm } from "../ElementDefinitionTerm";
+import { DefinitionTerm } from "../metamark_ast/DefinitionTerm";
+import { ElementDefinitionTerm } from "../metamark_ast/ElementDefinitionTerm";
 
 export class ElementParseFunctionGenerator extends ParseFunctionGenerator {
     private readonly _elementDefinition: ElementDefinitionTerm;

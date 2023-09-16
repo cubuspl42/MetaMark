@@ -11,7 +11,7 @@ import {
     Expression_parenExpressionContext,
     Expression_referenceExpressionContext,
     ExpressionContext,
-} from "../generated_src/MetamarkParser";
+} from "../../generated_src/MetamarkParser";
 import { StaticScope } from "./StaticScope";
 
 export class ExpressionTermUtils {

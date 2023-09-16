@@ -1,8 +1,12 @@
-import { arrayEquals, parseAsContext } from "./utils";
-import { Grammar_Context } from "../generated_src/MetamarkParser";
+import { arrayEquals, parseAsContext } from "../utils";
+import { Grammar_Context } from "../../generated_src/MetamarkParser";
 import { DefinitionTerm } from "./DefinitionTerm";
 import { BlockStaticScope, LoopedStaticScope } from "./StaticScope";
-import { ImportAllTerm, ModuleTerm, StringLiteralTerm } from "./typescript_ast";
+import {
+    ImportAllTerm,
+    ModuleTerm,
+    StringLiteralTerm,
+} from "../typescript_ast";
 import { DefinitionTermUtils } from "./DefinitionTermUtils";
 
 export class GrammarTerm {

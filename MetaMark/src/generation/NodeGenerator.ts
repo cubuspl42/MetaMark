@@ -1,4 +1,4 @@
-import { DefinitionTerm } from "../DefinitionTerm";
+import { DefinitionTerm } from "../metamark_ast/DefinitionTerm";
 import * as typescript_ast from "../typescript_ast";
 
 export abstract class NodeGenerator {

@@ -7,7 +7,7 @@ import {
     UnionTypeTerm,
 } from "../typescript_ast";
 import { FunctionArgumentDeclarationTerm } from "../typescript_ast/ArrowFunctionConstructorTerm";
-import { DefinitionTerm } from "../DefinitionTerm";
+import { DefinitionTerm } from "../metamark_ast/DefinitionTerm";
 import { NodeGenerator } from "./NodeGenerator";
 import { charStreamTypeReference, parseStringReference } from "./runtime";
 import { nullReference } from "../generationUtils";
