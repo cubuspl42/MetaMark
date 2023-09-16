@@ -49,8 +49,6 @@ export interface CharGroup {
 
 export type ParseFn<Node> = (charStream: CharStream) => Node | null;
 
-export const alphanumeric: CharGroup = null;
-
 export class ParseError extends Error {
     constructor(message: string) {
         super(message);

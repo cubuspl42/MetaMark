@@ -12,6 +12,7 @@ expression
     | repeatedExpression=expression Plus # expression_matchOneOrMoreExpression
     | optionalExpression=expression QuestionMark # expression_matchZeroOrOneExpression
     | referenceExpression # expression_referenceExpression
+    | expression expression+ # expression_concatExpression
     | stringLiteral # expression_stringLiteral
     ;
 
