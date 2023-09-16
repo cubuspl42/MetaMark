@@ -4,7 +4,7 @@ options { tokenVocab = MetamarkLexer; }
 
 grammar_ : definition+ ;
 
-definition : kind=(SymbolKeyword | RuleKeyword) name=Identifier Colon body=expression ;
+definition : kind=(TokenKeyword | ElementKeyworc) name=Identifier Colon body=expression ;
 
 expression
     : parenExpression # expression_parenExpression

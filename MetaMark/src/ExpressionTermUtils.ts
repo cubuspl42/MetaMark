@@ -50,7 +50,7 @@ export class ExpressionTermUtils {
         } else if (ctx instanceof Expression_matchZeroOrOneExpressionContext) {
             return MatchZeroOrOneExpressionTerm.build(staticScope, ctx);
         } else {
-            throw new Error(`Unsupported expression rule: ${ctx}`);
+            throw new Error(`Unsupported expression context: ${ctx}`);
         }
     }
 

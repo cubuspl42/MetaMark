@@ -5,7 +5,7 @@ import { InterfaceDeclarationTerm } from "./InterfaceDeclarationTerm";
 export type DeclarationModifier = "export";
 
 export interface IDeclarationTerm {
-    readonly modifier?: DeclarationModifier;
+    readonly modifier: DeclarationModifier | null;
     readonly name: string;
 }
 

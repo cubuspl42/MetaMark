@@ -1,24 +1,13 @@
-import {
-    DefinitionContext,
-    Expression_stringLiteralContext,
-} from "../generated_src/MetamarkParser";
+import { DefinitionContext, Expression_stringLiteralContext } from "../generated_src/MetamarkParser";
 import { MetamarkLexer } from "../generated_src/MetamarkLexer";
 import { ExpressionTerm } from "./ExpressionTerm";
 import { StringLiteralTerm } from "./StringLiteralTerm";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
 import * as typescript_ast from "./typescript_ast";
-import {
-    ArrowFunctionConstructorTerm,
-    BlockTerm,
-    ConstDefinitionTerm,
-    TypeReferenceTerm,
-} from "./typescript_ast";
+import { ArrowFunctionConstructorTerm, BlockTerm, ConstDefinitionTerm, TypeReferenceTerm } from "./typescript_ast";
 import { FunctionArgumentDeclarationTerm } from "./typescript_ast/ArrowFunctionConstructorTerm";
 import { StaticScope } from "./StaticScope";
-import {
-    generateIfNullReturnNullStatement,
-    generateReturnReference,
-} from "./generationUtils";
+import { generateIfNullReturnNullStatement, generateReturnReference } from "./generationUtils";
 
 abstract class ParseFunctionRepresentation {
     abstract buildExpression(): typescript_ast.ExpressionTerm;
@@ -30,7 +19,7 @@ export abstract class DefinitionTerm {
 
     static equals(a: unknown, b: unknown): boolean | undefined {
         return (
-            SymbolDefinitionTerm.equals(a, b) ?? RuleDefinitionTerm.equals(a, b)
+            TokenDefinitionTerm.equals(a, b) ?? ElementDefinitionTerm.equals(a, b)
         );
     }
 
@@ -42,15 +31,15 @@ export abstract class DefinitionTerm {
         const body = ctx._body;
 
         if (
-            kindType === MetamarkLexer.SymbolKeyword &&
+            kindType === MetamarkLexer.TokenKeyword &&
             body instanceof Expression_stringLiteralContext
         ) {
-            return new SymbolDefinitionTerm(
+            return new TokenDefinitionTerm(
                 ctx._name.text ?? "",
                 StringLiteralTerm.build(body.stringLiteral()),
             );
-        } else if (kindType === MetamarkLexer.RuleKeyword) {
-            return new RuleDefinitionTerm(
+        } else if (kindType === MetamarkLexer.ElementKeyworc) {
+            return new ElementDefinitionTerm(
                 ctx._name.text ?? "",
                 ExpressionTermUtils.build(staticScope, body),
             );
@@ -61,10 +50,46 @@ export abstract class DefinitionTerm {
 
     abstract readonly name: string;
 
-    abstract get representation(): DefinitionRepresentation;
+    abstract get ruleRepresentation(): RuleRepresentation;
+
+    abstract get nodeRepresentation(): NodeRepresentation;
 }
 
-abstract class DefinitionRepresentation {
+abstract class NodeRepresentation {
+    protected abstract get definitionTerm(): DefinitionTerm;
+
+    private get typeName() {
+        const name = this.definitionTerm.name;
+
+        const firstLetter = name[0];
+        const nameTail = name.substring(1);
+
+        return firstLetter.toUpperCase() + nameTail;
+    }
+
+    generateTypeReference(): typescript_ast.TypeReferenceTerm {
+        return new typescript_ast.TypeReferenceTerm({
+            referredName: this.typeName,
+        });
+    }
+
+    generateInterfaceDeclaration() {
+        return new typescript_ast.InterfaceDeclarationTerm({
+            modifier: "export",
+            name: this.typeName,
+            properties: [
+                new typescript_ast.PropertySignatureTerm({
+                    name: "type",
+                    type: new typescript_ast.StringLiteralTerm({
+                        value: this.definitionTerm.name,
+                    }),
+                }),
+            ],
+        });
+    }
+}
+
+abstract class RuleRepresentation {
     private static charStreamName = "charStream";
     private static charStreamTypeName = "CharStream";
 
@@ -74,7 +99,7 @@ abstract class DefinitionRepresentation {
         }),
         arguments: [
             new typescript_ast.ReferenceExpressionTerm({
-                referredName: DefinitionRepresentation.charStreamName,
+                referredName: RuleRepresentation.charStreamName,
             }),
         ],
     });
@@ -92,10 +117,10 @@ abstract class DefinitionRepresentation {
             body: new ArrowFunctionConstructorTerm({
                 arguments: [
                     new FunctionArgumentDeclarationTerm({
-                        name: DefinitionRepresentation.charStreamName,
+                        name: RuleRepresentation.charStreamName,
                         type: new TypeReferenceTerm({
                             referredName:
-                                DefinitionRepresentation.charStreamTypeName,
+                            RuleRepresentation.charStreamTypeName,
                         }),
                     }),
                 ],
@@ -109,7 +134,9 @@ abstract class DefinitionRepresentation {
 
     protected abstract get name(): string;
 
+
     protected abstract generateParseFunctionBody(): BlockTerm;
+
 
     private get nodeTypeName() {
         const firstLetter = this.name[0];
@@ -129,12 +156,14 @@ abstract class DefinitionRepresentation {
     }
 }
 
-class SymbolRepresentation extends DefinitionRepresentation {
-    readonly _symbolDefinition: SymbolDefinitionTerm;
+class TokenRuleRepresentation extends RuleRepresentation {
+    readonly _tokenDefinition: TokenDefinitionTerm;
 
-    constructor(args: { readonly symbolDefinition: SymbolDefinitionTerm }) {
+    constructor(args: {
+        readonly tokenDefinition: TokenDefinitionTerm
+    }) {
         super();
-        this._symbolDefinition = args.symbolDefinition;
+        this._tokenDefinition = args.tokenDefinition;
     }
 
     get kind(): string {
@@ -142,7 +171,7 @@ class SymbolRepresentation extends DefinitionRepresentation {
     }
 
     get name(): string {
-        return this._symbolDefinition.name;
+        return this._tokenDefinition.name;
     }
 
     generateParseFunctionBody(): BlockTerm {
@@ -150,7 +179,7 @@ class SymbolRepresentation extends DefinitionRepresentation {
             innerStatements: [
                 new ConstDefinitionTerm({
                     name: "symbol",
-                    body: SymbolRepresentation.parseStringCall,
+                    body: TokenRuleRepresentation.parseStringCall,
                 }),
                 generateIfNullReturnNullStatement({
                     comparedReferredName: "symbol",
@@ -163,15 +192,15 @@ class SymbolRepresentation extends DefinitionRepresentation {
     }
 }
 
-abstract class RuleRepresentation extends DefinitionRepresentation {
-    abstract get ruleDefinition(): RuleDefinitionTerm;
+abstract class ElementRuleRepresentation extends RuleRepresentation {
+    abstract get elementDefinition(): ElementDefinitionTerm;
 
     override get kind(): string {
         return "Rule";
     }
 
     override get name(): string {
-        return this.ruleDefinition.name;
+        return this.elementDefinition.name;
     }
 
     override generateParseFunctionBody(): BlockTerm {
@@ -179,7 +208,7 @@ abstract class RuleRepresentation extends DefinitionRepresentation {
             innerStatements: [
                 new ConstDefinitionTerm({
                     name: "symbol",
-                    body: SymbolRepresentation.parseStringCall,
+                    body: TokenRuleRepresentation.parseStringCall,
                 }),
                 generateIfNullReturnNullStatement({
                     comparedReferredName: "symbol",
@@ -192,19 +221,20 @@ abstract class RuleRepresentation extends DefinitionRepresentation {
     }
 }
 
-export class SymbolDefinitionTerm extends DefinitionTerm {
+export class TokenDefinitionTerm extends DefinitionTerm {
     static override equals(
-        a: SymbolDefinitionTerm,
-        b: SymbolDefinitionTerm,
+        a: TokenDefinitionTerm,
+        b: TokenDefinitionTerm,
     ): boolean;
     static override equals(a: unknown, b: unknown): boolean | undefined;
 
     static override equals(a: unknown, b: unknown): boolean | undefined {
-        if (!(a instanceof SymbolDefinitionTerm)) return undefined;
-        if (!(b instanceof SymbolDefinitionTerm)) return undefined;
+        if (!(a instanceof TokenDefinitionTerm)) return undefined;
+        if (!(b instanceof TokenDefinitionTerm)) return undefined;
         if (a.name !== b.name) return false;
         return StringLiteralTerm.equals(a.pattern, b.pattern);
     }
+
 
     override readonly name: string;
     readonly pattern: StringLiteralTerm;
@@ -215,23 +245,34 @@ export class SymbolDefinitionTerm extends DefinitionTerm {
         this.pattern = pattern;
     }
 
-    get representation(): DefinitionRepresentation {
-        return new SymbolRepresentation({
-            symbolDefinition: this,
+    get ruleRepresentation(): RuleRepresentation {
+        return new TokenRuleRepresentation({
+            tokenDefinition: this,
         });
+    }
+
+
+    override get nodeRepresentation(): NodeRepresentation {
+        const self = this;
+
+        return new class extends NodeRepresentation {
+            protected get definitionTerm(): DefinitionTerm {
+                return self;
+            }
+        };
     }
 }
 
-export class RuleDefinitionTerm extends DefinitionTerm {
+export class ElementDefinitionTerm extends DefinitionTerm {
     static override equals(
-        a: RuleDefinitionTerm,
-        b: RuleDefinitionTerm,
+        a: ElementDefinitionTerm,
+        b: ElementDefinitionTerm,
     ): boolean;
     static override equals(a: unknown, b: unknown): boolean | undefined;
 
     static override equals(a: unknown, b: unknown): boolean | undefined {
-        if (!(a instanceof RuleDefinitionTerm)) return undefined;
-        if (!(b instanceof RuleDefinitionTerm)) return undefined;
+        if (!(a instanceof ElementDefinitionTerm)) return undefined;
+        if (!(b instanceof ElementDefinitionTerm)) return undefined;
         if (a.name !== b.name) return false;
         return ExpressionTermUtils.equals(a.body, b.body);
     }
@@ -245,7 +286,11 @@ export class RuleDefinitionTerm extends DefinitionTerm {
         this.body = body;
     }
 
-    get representation(): DefinitionRepresentation {
+    override get nodeRepresentation(): NodeRepresentation {
+        throw new Error();
+    }
+
+    get ruleRepresentation(): RuleRepresentation {
         throw new Error();
     }
 }
