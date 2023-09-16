@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import minimist from "minimist";
 import * as fs from "fs";
-import { GrammarTerm } from "./GrammarTerm";
+import { GrammarTerm } from "./metamark_ast/GrammarTerm";
 import * as path from "path";
 import runtimeSourceString from "../runtime/runtime.ts.txt";
 

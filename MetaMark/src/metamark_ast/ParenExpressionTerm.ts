@@ -1,8 +1,8 @@
 import { ExpressionTerm } from "./ExpressionTerm";
-import { ParenExpressionContext } from "../generated_src/MetamarkParser";
+import { ParenExpressionContext } from "../../generated_src/MetamarkParser";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
 import { StaticScope } from "./StaticScope";
-import * as typescript_ast from "./typescript_ast";
+import * as typescript_ast from "../typescript_ast";
 
 export class ParenExpressionTerm extends ExpressionTerm {
     static equals(a: ParenExpressionTerm, b: ParenExpressionTerm): boolean;

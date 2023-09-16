@@ -1,10 +1,10 @@
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
 import { ExpressionTerm } from "./ExpressionTerm";
-import { NodeGenerator } from "./generation/NodeGenerator";
-import { ParseFunctionGenerator } from "./generation/ParseFunctionGenerator";
-import { ElementParseFunctionGenerator } from "./generation/ElementParseFunctionGenerator";
+import { NodeGenerator } from "../generation/NodeGenerator";
+import { ParseFunctionGenerator } from "../generation/ParseFunctionGenerator";
+import { ElementParseFunctionGenerator } from "../generation/ElementParseFunctionGenerator";
 import { DefinitionTerm } from "./DefinitionTerm";
-import { ElementNodeGenerator } from "./generation/ElementNodeGenerator";
+import { ElementNodeGenerator } from "../generation/ElementNodeGenerator";
 
 export class ElementDefinitionTerm extends DefinitionTerm {
     static equals(a: ElementDefinitionTerm, b: ElementDefinitionTerm): boolean;

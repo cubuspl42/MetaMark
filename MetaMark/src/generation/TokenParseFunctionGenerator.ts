@@ -4,9 +4,9 @@ import {
     generateIfNullReturnNullStatement,
     generateReturnReference,
 } from "../generationUtils";
-import { DefinitionTerm } from "../DefinitionTerm";
+import { DefinitionTerm } from "../metamark_ast/DefinitionTerm";
 import { NodeGenerator } from "./NodeGenerator";
-import { TokenDefinitionTerm } from "../TokenDefinitionTerm";
+import { TokenDefinitionTerm } from "../metamark_ast/TokenDefinitionTerm";
 
 export class TokenParseFunctionGenerator extends ParseFunctionGenerator {
     readonly _tokenDefinition: TokenDefinitionTerm;

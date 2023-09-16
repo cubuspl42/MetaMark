@@ -1,8 +1,8 @@
 import {
     DefinitionContext,
     Expression_stringLiteralContext,
-} from "../generated_src/MetamarkParser";
-import { MetamarkLexer } from "../generated_src/MetamarkLexer";
+} from "../../generated_src/MetamarkParser";
+import { MetamarkLexer } from "../../generated_src/MetamarkLexer";
 import { StringLiteralTerm } from "./StringLiteralTerm";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
 import { StaticScope } from "./StaticScope";

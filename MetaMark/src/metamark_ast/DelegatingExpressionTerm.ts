@@ -1,5 +1,5 @@
 import { ExpressionTerm } from "./ExpressionTerm";
-import * as typescript_ast from "./typescript_ast";
+import * as typescript_ast from "../typescript_ast";
 
 export class DelegatingExpressionTerm extends ExpressionTerm {
     constructor(

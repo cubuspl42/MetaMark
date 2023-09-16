@@ -1,5 +1,5 @@
 import { ExpressionTerm } from "./ExpressionTerm";
-import { Expression_matchZeroOrMoreExpressionContext } from "../generated_src/MetamarkParser";
+import { Expression_matchZeroOrMoreExpressionContext } from "../../generated_src/MetamarkParser";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
 import { DelegatingExpressionTerm } from "./DelegatingExpressionTerm";
 import { StaticScope } from "./StaticScope";

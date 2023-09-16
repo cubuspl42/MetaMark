@@ -1,7 +1,7 @@
 import { NodeGenerator } from "./NodeGenerator";
-import { DefinitionTerm } from "../DefinitionTerm";
+import { DefinitionTerm } from "../metamark_ast/DefinitionTerm";
 import { PropertySignatureTerm } from "../typescript_ast";
-import { TokenDefinitionTerm } from "../TokenDefinitionTerm";
+import { TokenDefinitionTerm } from "../metamark_ast/TokenDefinitionTerm";
 
 export class TokenNodeGenerator extends NodeGenerator {
     readonly _tokenDefinition: TokenDefinitionTerm;

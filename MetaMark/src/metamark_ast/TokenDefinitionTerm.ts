@@ -1,9 +1,9 @@
 import { StringLiteralTerm } from "./StringLiteralTerm";
-import { ParseFunctionGenerator } from "./generation/ParseFunctionGenerator";
-import { TokenParseFunctionGenerator } from "./generation/TokenParseFunctionGenerator";
-import { NodeGenerator } from "./generation/NodeGenerator";
+import { ParseFunctionGenerator } from "../generation/ParseFunctionGenerator";
+import { TokenParseFunctionGenerator } from "../generation/TokenParseFunctionGenerator";
+import { NodeGenerator } from "../generation/NodeGenerator";
 import { DefinitionTerm } from "./DefinitionTerm";
-import { TokenNodeGenerator } from "./generation/TokenNodeGenerator";
+import { TokenNodeGenerator } from "../generation/TokenNodeGenerator";
 
 export class TokenDefinitionTerm extends DefinitionTerm {
     static equals(a: TokenDefinitionTerm, b: TokenDefinitionTerm): boolean;
