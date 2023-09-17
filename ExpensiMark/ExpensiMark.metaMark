@@ -1,3 +1,15 @@
-%token Asterisk : "*"
+%marker Asterisk : "**"
+%marker Underscore : "_"
 
-%element Emphasis : Asterisk content=$anyText Asterisk
+(built-in) %token .anySymbol : Asterisk | Underscore | ...
+(built-in) %token .otherChar : // anything [but symbols]
+%token .anyToken : .anySymbol | .otherChar
+
+%token emphasisContentToken = .anyToken \ Asterisk
+
+%element emphasis : Asterisk content=(.anyToken \ Asterisk)+ Asterisk
+
+
+%element e1 : Asterisk (Token1 p1+=Foo Token2 p1+=Foo)+ Asterisk
+
+%element e2 : Asterisk p1+=(Foo p2+=Foo)+ Asterisk
