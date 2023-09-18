@@ -53,7 +53,7 @@ export class ExpressionTermUtils {
             return MatchZeroOrOneExpressionTerm.build(staticScope, ctx);
         } else if (ctx instanceof Expression_concatExpressionContext) {
             return ConcatExpressionTerm.build(staticScope, ctx);
-        }else {
+        } else {
             throw new Error(`Unsupported expression context: ${ctx}`);
         }
     }
