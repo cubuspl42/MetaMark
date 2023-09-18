@@ -1,18 +1,18 @@
 import { NodeGenerator } from "./NodeGenerator";
 import { DefinitionTerm } from "../metamark_ast/DefinitionTerm";
 import { PropertySignatureTerm } from "../typescript_ast";
-import { TokenDefinitionTerm } from "../metamark_ast/TokenDefinitionTerm";
+import { MarkDefinitionTerm } from "../metamark_ast/MarkDefinitionTerm";
 
 export class TokenNodeGenerator extends NodeGenerator {
-    readonly _tokenDefinition: TokenDefinitionTerm;
+    readonly _markDefinition: MarkDefinitionTerm;
 
-    constructor(args: { readonly tokenDefinition: TokenDefinitionTerm }) {
+    constructor(args: { readonly markDefinition: MarkDefinitionTerm }) {
         super();
-        this._tokenDefinition = args.tokenDefinition;
+        this._markDefinition = args.markDefinition;
     }
 
     override get definition(): DefinitionTerm {
-        return this._tokenDefinition;
+        return this._markDefinition;
     }
 
     override generateExtraInterfaceProperties(): ReadonlyArray<PropertySignatureTerm> {

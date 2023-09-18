@@ -5,13 +5,13 @@ import { NodeGenerator } from "../generation/NodeGenerator";
 import { DefinitionTerm } from "./DefinitionTerm";
 import { TokenNodeGenerator } from "../generation/TokenNodeGenerator";
 
-export class TokenDefinitionTerm extends DefinitionTerm {
-    static equals(a: TokenDefinitionTerm, b: TokenDefinitionTerm): boolean;
+export class MarkDefinitionTerm extends DefinitionTerm {
+    static equals(a: MarkDefinitionTerm, b: MarkDefinitionTerm): boolean;
     static equals(a: unknown, b: unknown): boolean | undefined;
 
     static equals(a: unknown, b: unknown): boolean | undefined {
-        if (!(a instanceof TokenDefinitionTerm)) return undefined;
-        if (!(b instanceof TokenDefinitionTerm)) return undefined;
+        if (!(a instanceof MarkDefinitionTerm)) return undefined;
+        if (!(b instanceof MarkDefinitionTerm)) return undefined;
         if (a.name !== b.name) return false;
         return StringLiteralTerm.equals(a.pattern, b.pattern);
     }
@@ -27,13 +27,13 @@ export class TokenDefinitionTerm extends DefinitionTerm {
 
     override get nodeGenerator(): NodeGenerator {
         return new TokenNodeGenerator({
-            tokenDefinition: this,
+            markDefinition: this,
         });
     }
 
     override get parseFunctionGenerator(): ParseFunctionGenerator {
         return new TokenParseFunctionGenerator({
-            tokenDefinition: this,
+            markDefinition: this,
         });
     }
 }

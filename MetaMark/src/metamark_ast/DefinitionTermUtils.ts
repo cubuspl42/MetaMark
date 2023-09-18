@@ -7,7 +7,7 @@ import { StringLiteralTerm } from "./StringLiteralTerm";
 import { ExpressionTermUtils } from "./ExpressionTermUtils";
 import { StaticScope } from "./StaticScope";
 import { ElementDefinitionTerm } from "./ElementDefinitionTerm";
-import { TokenDefinitionTerm } from "./TokenDefinitionTerm";
+import { MarkDefinitionTerm } from "./MarkDefinitionTerm";
 import { DefinitionTerm } from "./DefinitionTerm";
 
 export abstract class DefinitionTermUtils {
@@ -16,7 +16,7 @@ export abstract class DefinitionTermUtils {
 
     static equals(a: unknown, b: unknown): boolean | undefined {
         return (
-            TokenDefinitionTerm.equals(a, b) ??
+            MarkDefinitionTerm.equals(a, b) ??
             ElementDefinitionTerm.equals(a, b)
         );
     }
@@ -29,10 +29,10 @@ export abstract class DefinitionTermUtils {
         const body = ctx._body;
 
         if (
-            kindType === MetamarkLexer.TokenKeyword &&
+            kindType === MetamarkLexer.MarkKeyword &&
             body instanceof Expression_stringLiteralContext
         ) {
-            return new TokenDefinitionTerm(
+            return new MarkDefinitionTerm(
                 ctx._name.text ?? "",
                 StringLiteralTerm.build(body.stringLiteral()),
             );

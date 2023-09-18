@@ -6,18 +6,18 @@ import {
 } from "../generationUtils";
 import { DefinitionTerm } from "../metamark_ast/DefinitionTerm";
 import { NodeGenerator } from "./NodeGenerator";
-import { TokenDefinitionTerm } from "../metamark_ast/TokenDefinitionTerm";
+import { MarkDefinitionTerm } from "../metamark_ast/MarkDefinitionTerm";
 
 export class TokenParseFunctionGenerator extends ParseFunctionGenerator {
-    readonly _tokenDefinition: TokenDefinitionTerm;
+    readonly _markDefinition: MarkDefinitionTerm;
 
-    constructor(args: { readonly tokenDefinition: TokenDefinitionTerm }) {
+    constructor(args: { readonly markDefinition: MarkDefinitionTerm }) {
         super("Token");
-        this._tokenDefinition = args.tokenDefinition;
+        this._markDefinition = args.markDefinition;
     }
 
     override get definition(): DefinitionTerm {
-        return this._tokenDefinition;
+        return this._markDefinition;
     }
 
     override generateParseFunctionBody(): BlockTerm {
