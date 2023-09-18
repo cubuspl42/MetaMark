@@ -95,7 +95,7 @@ export interface ExpressionParser<Context extends {}> extends Parser<ExpressionM
 }
 
 export function and<Context extends {}>(
-    ...parser1: ReadonlyArray<ExpressionParser<Context>>,
+    ...parser1: ReadonlyArray<ExpressionParser<Context>>
 ): ExpressionParser<Context> {
     throw new Error();
 }
@@ -178,7 +178,7 @@ export function discardNode<EntityNode extends {}>(
     parser: EntityParser<EntityNode>,
 ): ExpressionParser<never> {
     return {
-        parse(charStream: CharStream): ExpressionMatch<Context> | null {
+        parse(charStream: CharStream): ExpressionMatch<never> | null {
             const result = parser.parse(charStream);
 
             if (result !== null) {
@@ -193,12 +193,12 @@ export function discardNode<EntityNode extends {}>(
     };
 }
 
-export function buildTokenParser<ElementContext extends {}, TokenNode extends Token>(
+export function buildTokenParser<TokenNode extends Token>(
     tokenNode: TokenNode,
 ): EntityParser<TokenNode> {
     return {
         parse(charStream: CharStream): EntityMatch<TokenNode> | null {
-            for (const expectedChar of token.text) {
+            for (const expectedChar of tokenNode.text) {
                 const actualChar = charStream.take();
 
                 if (actualChar !== expectedChar) {

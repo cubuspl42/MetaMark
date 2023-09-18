@@ -1,5 +1,5 @@
-%marker Asterisk : "**"
-%marker Underscore : "_"
+%mark Asterisk : "*"
+%mark Underscore : "_"
 
 (built-in) %token .anySymbol : Asterisk | Underscore | ...
 (built-in) %token .otherChar : // anything [but symbols]
