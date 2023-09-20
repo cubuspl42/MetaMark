@@ -1,30 +1,23 @@
 import * as runtime from "./runtime";
-import { buildTokenParser, EntityParser, ExpressionParser, oneOrMore, Token } from "./runtime";
+import { EntityParser, MarkKind, otherCharKind, Token, TokenKindSet, TokenKindSets } from "./runtime";
 
-
-interface Asterisk {
-    readonly kind: "token";
-    readonly type: "Asterisk";
-    readonly text: "**";
+const asteriskKind: MarkKind = new class AsteriskKind extends MarkKind {
+    override readonly textPattern = "*"
 }
 
-const asterisk: Asterisk = {
-    kind: "token",
-    type: "Asterisk",
-    text: "**",
-};
-
-interface Underscore {
-    readonly kind: "token";
-    readonly type: "Underscore";
-    readonly text: "_";
+const underscoreKind: MarkKind = new class UnderscoreKind extends MarkKind {
+    override readonly textPattern = "_"
 }
 
-const underscore: Underscore = {
-    kind: "token",
-    type: "Underscore",
-    text: "_",
-};
+const anyMarkKind: TokenKindSet = new Set([
+    asteriskKind,
+    underscoreKind,
+]);
+
+const anyTokenKind = TokenKindSets.with(
+    anyMarkKind,
+    otherCharKind,
+);
 
 interface EmphasisContext {
     content: Array<Token>;
@@ -39,29 +32,26 @@ function todo(): never {
     throw new Error();
 }
 
-
-const anyTokenParser: runtime.EntityParser<Token> = todo();
-
-export const asteriskParser: runtime.EntityParser<Asterisk> = buildTokenParser(asterisk);
-
 export const emphasisParser: EntityParser<Emphasis> = runtime.buildElementParser(
     (): EmphasisContext => ({
         content: new Array<Token>(),
     }),
     (context): Emphasis => ({
         type: "Emphasis",
-        content: runtime.concatTokensText(context.content),
+        content: runtime.concatTokens(context.content),
     }),
     runtime.and(
-        runtime.discardNode(asteriskParser),
+        runtime.discardResult(asteriskKind.parser),
         runtime.oneOrMore(
-            runtime.useNode(
-                anyTokenParser,
-                (context: EmphasisContext, entityNode) => {
-                    context.content.push(entityNode);
+            runtime.useResult(
+                TokenKindSets.buildParser(
+                    TokenKindSets.without(anyTokenKind, asteriskKind),
+                ),
+                (context: EmphasisContext, token) => {
+                    context.content.push(token);
                 },
             ),
         ),
-        runtime.discardNode(asteriskParser),
+        // runtime.discardResult(asteriskKind.parser),
     ),
 );

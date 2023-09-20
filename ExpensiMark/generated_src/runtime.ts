@@ -1,13 +1,108 @@
 // A single Unicode code point
+import { Context } from "vm";
+
 type Char = string;
 
-export interface Token {
-    kind: "token";
-    type: string;
-    text: string;
+export abstract class TokenKind {
+    abstract get parser(): Parser<Token>;
 }
 
-export const concatTokensText = (
+export const otherCharKind = new class OtherCharKind extends TokenKind {
+    readonly parser: Parser<Token> = new class OtherCharParser implements Parser<Token> {
+        parse(charStream: CharStream): Token | null {
+            if (charStream.peek() === null) {
+                return null;
+            }
+
+            return {
+                kind: otherCharKind,
+                text: charStream.take(),
+            };
+        }
+    };
+};
+
+export abstract class MarkKind extends TokenKind {
+    override get parser(): Parser<Token> {
+        const self: MarkKind = this;
+
+        return new class MarkParser implements Parser<Token> {
+            parse(charStream: CharStream): Token | null {
+                for (const expectedChar of self.textPattern) {
+                    if (charStream.peek() === null) {
+                        return null;
+                    }
+
+                    const actualChar = charStream.take();
+
+                    if (actualChar !== expectedChar) {
+                        return null;
+                    }
+                }
+
+                return {
+                    kind: self,
+                    text: self.textPattern,
+                };
+            }
+        };
+    }
+
+    protected abstract get textPattern(): string;
+}
+
+export interface Token {
+    readonly kind: TokenKind;
+    readonly text: string;
+}
+
+export type TokenKindSet = ReadonlySet<TokenKind>;
+
+export class TokenKindSets {
+    static merge(a: TokenKindSet, b: TokenKindSet): TokenKindSet {
+        return new Set([...a, ...b]);
+    }
+
+    static with(a: TokenKindSet, b: TokenKind): TokenKindSet {
+        return new Set([...a, b]);
+    }
+
+    static without(a: TokenKindSet, b: TokenKind): TokenKindSet {
+        const result = new Set<TokenKind>(a);
+        result.delete(b);
+        return result;
+    }
+
+    static buildParser(
+        tokenSet: TokenKindSet,
+    ): Parser<Token> {
+        // We assume that ńo tokens share a common prefix
+        const tokenParsers = [...tokenSet].map((tokenKind) => tokenKind.parser);
+
+        return new class TokenParser implements Parser<Token>{
+            parse(charStream: CharStream): Token | null {
+                const initialIndex = charStream.currentIndex();
+
+                for (const tokenParser of tokenParsers) {
+                    const matchedToken = tokenParser.parse(charStream);
+
+                    if (matchedToken !== null) {
+                        return matchedToken;
+                    }
+
+                    charStream.backtrack(initialIndex);
+                }
+
+                return null;
+            }
+        };
+    }
+
+    private constructor() {
+    }
+}
+
+export const concatTokens = (
     tokens: ReadonlyArray<Token>,
 ): string => {
     return tokens.map((it) => it.text).join("");
@@ -70,7 +165,7 @@ export class StringCharStream implements CharStream {
     }
 
     backtrack(previousIndex: number): void {
-        if (previousIndex < 0 || previousIndex >= this._index) {
+        if (previousIndex < 0 || previousIndex > this._index) {
             throw new Error("Invalid index state");
         }
 
@@ -95,39 +190,83 @@ export interface ExpressionParser<Context extends {}> extends Parser<ExpressionM
 }
 
 export function and<Context extends {}>(
-    ...parser1: ReadonlyArray<ExpressionParser<Context>>
+    ...parsers: ReadonlyArray<ExpressionParser<Context>>
 ): ExpressionParser<Context> {
-    throw new Error();
+    return new class AndExpressionParser implements ExpressionParser<Context> {
+        parse(charStream: CharStream): ExpressionMatch<Context> | null {
+            const matches: Array<ExpressionMatch<Context>> = [];
+
+            for (const parser of parsers) {
+                const match = parser.parse(charStream);
+
+                if (match === null) {
+                    return null;
+                }
+
+                matches.push(match);
+            }
+
+            return new class implements ExpressionMatch<Context> {
+                affect(context: Context): void {
+                    for (const match of matches) {
+                        match.affect(context);
+                    }
+                }
+            }
+        }
+    }
 }
 
 export function or<Context extends {}>(
     parser1: ExpressionParser<Context>,
     parser2: ExpressionParser<Context>,
 ): ExpressionParser<Context> {
-    throw new Error();
+    return new class implements ExpressionParser<Context> {
+        parse(charStream: CharStream): ExpressionMatch<Context> | null {
+            const initialIndex = charStream.currentIndex();
+
+            const match1 = parser1.parse(charStream);
+
+            if (match1 !== null) {
+                return match1;
+            }
+
+            charStream.backtrack(initialIndex);
+
+            return parser2.parse(charStream);
+        }
+    }
 }
 
 export function oneOrMore<Context extends {}>(
     repeatedParser: ExpressionParser<Context>,
 ): ExpressionParser<Context> {
-    return {
+    return new class OneOrMoreParser implements ExpressionParser<Context>  {
         parse(charStream: CharStream): ExpressionMatch<Context> | null {
+            const initialIndex = charStream.currentIndex();
+
             const firstMatch = repeatedParser.parse(charStream);
 
             if (firstMatch === null) {
+                charStream.backtrack(initialIndex);
+
                 return null;
             }
 
             const matches: Array<ExpressionMatch<Context>> = [firstMatch];
 
             while (true) {
-                const result = repeatedParser.parse(charStream);
+                const previousIndex = charStream.currentIndex();
 
-                if (result === null) {
+                const match = repeatedParser.parse(charStream);
+
+                if (match === null) {
+                    charStream.backtrack(previousIndex);
+
                     break;
                 }
 
-                matches.push(result);
+                matches.push(match);
             }
 
             return {
@@ -137,7 +276,7 @@ export function oneOrMore<Context extends {}>(
                     });
                 },
             };
-        },
+        }
     };
 }
 
@@ -151,9 +290,9 @@ export interface EntityParser<EntityNode extends {}> extends Parser<EntityMatch<
     ): EntityMatch<EntityNode> | null;
 }
 
-export function useNode<EntityNode extends {}, Context extends {}>(
-    parser: EntityParser<EntityNode>,
-    store: (context: Context, entityNode: EntityNode) => void,
+export function useResult<Result extends {}, Context extends {}>(
+    parser: Parser<Result>,
+    store: (context: Context, result: Result) => void,
 ): ExpressionParser<Context> {
     return {
         parse(charStream: CharStream): ExpressionMatch<Context> | null {
@@ -162,9 +301,7 @@ export function useNode<EntityNode extends {}, Context extends {}>(
             if (result !== null) {
                 return {
                     affect(context: Context): void {
-                        const node = result.buildNode();
-
-                        store(context, node);
+                        store(context, result);
                     },
                 };
             } else {
@@ -174,46 +311,56 @@ export function useNode<EntityNode extends {}, Context extends {}>(
     };
 }
 
-export function discardNode<EntityNode extends {}>(
+export function useEntityNode<EntityNode extends {}, Context extends {}>(
     parser: EntityParser<EntityNode>,
+    store: (context: Context, entityNode: EntityNode) => void,
+): ExpressionParser<Context> {
+    return useResult(
+        parser,
+        (context, entityMatch) => entityMatch.buildNode(),
+    );
+}
+
+export function discardResult<Result extends {}>(
+    parser: Parser<Result>,
 ): ExpressionParser<never> {
-    return {
+    return new class ResultDiscardingParser {
         parse(charStream: CharStream): ExpressionMatch<never> | null {
             const result = parser.parse(charStream);
 
             if (result !== null) {
-                return {
+                return new class implements ExpressionMatch<never> {
                     affect(): void {
-                    },
-                };
+                    }
+                }
             } else {
                 return null;
             }
-        },
+        }
     };
 }
 
-export function buildTokenParser<TokenNode extends Token>(
-    tokenNode: TokenNode,
-): EntityParser<TokenNode> {
-    return {
-        parse(charStream: CharStream): EntityMatch<TokenNode> | null {
-            for (const expectedChar of tokenNode.text) {
-                const actualChar = charStream.take();
-
-                if (actualChar !== expectedChar) {
-                    return null;
-                }
-            }
-
-            return {
-                buildNode(): TokenNode {
-                    return tokenNode;
-                },
-            };
-        },
-    };
-}
+// export function buildMarkParser<MarkNode extends AbstractMark>(
+//     markNode: MarkNode,
+// ): EntityParser<MarkNode> {
+//     return {
+//         parse(charStream: CharStream): EntityMatch<MarkNode> | null {
+//             for (const expectedChar of markNode.text) {
+//                 const actualChar = charStream.take();
+//
+//                 if (actualChar !== expectedChar) {
+//                     return null;
+//                 }
+//             }
+//
+//             return {
+//                 buildNode(): MarkNode {
+//                     return markNode;
+//                 },
+//             };
+//         },
+//     };
+// }
 
 export function buildElementParser<ElementContext extends {}, ElementNode extends {}>(
     createContext: () => ElementContext,
@@ -222,14 +369,14 @@ export function buildElementParser<ElementContext extends {}, ElementNode extend
 ): EntityParser<ElementNode> {
     return {
         parse(charStream: CharStream): EntityMatch<ElementNode> | null {
-            const bodyResult = bodyParser.parse(charStream);
+            const bodyMatch = bodyParser.parse(charStream);
 
-            if (bodyResult !== null) {
+            if (bodyMatch !== null) {
                 return {
                     buildNode(): ElementNode {
                         const context = createContext();
 
-                        bodyResult.affect(context);
+                        bodyMatch.affect(context);
 
                         return buildNode(context);
                     },

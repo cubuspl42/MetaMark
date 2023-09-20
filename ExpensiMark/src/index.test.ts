@@ -11,6 +11,6 @@ describe("GrammarTerm", () => {
 
         const content = result!.buildNode().content;
 
-        expect(content).toEqual("foo");
+        expect(content).toEqual("foo*");
     });
 });
